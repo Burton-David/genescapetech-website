@@ -19,3 +19,5 @@ node_modules/
 # project snapshots
 inspect_project.py
 project_inspection_report.txt
+analyze_website
+analysis_report/
