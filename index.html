@@ -3,14 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeneScape Technologies - Pioneering RNA Editing</title> <!-- More specific title -->
+    <title>GeneScape Technologies - Vision</title> <!-- Updated Title -->
 
-    <!-- Google Font: Poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome (for potential future icons) -->
+    <!-- Font Awesome (for back button icon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Main Stylesheet -->
@@ -25,29 +20,44 @@
 
     <!-- Entrance Screen -->
     <section id="entrance-screen">
-        <div class="video-background-container">
-            <video id="entranceVideo" autoplay loop muted playsinline poster="images/image1.png">
-                <source src="Intro_video.mp4" type="video/mp4">
-                <!-- <source src="Intro_video.webm" type="video/webm"> -->
-                Your browser does not support the video tag.
-            </video>
+        <div class="background-container">
+            <div class="background-image"></div>
         </div>
         <div class="animation-overlay">
             <div id="title-container">
                  <h1 id="company-name" aria-label="GeneScape Technologies">
                      <!-- Text content added dynamically by JS -->
                  </h1>
-                 <!-- "Enter" prompt integrated via CSS -->
             </div>
         </div>
     </section>
 
     <!-- Main Content Area -->
     <main id="main-content" style="display: none;">
-        <!-- Static Background for this section -->
-        <div class="background-layer" id="main-bg"></div>
-        <!-- Subtle Canvas Animation Layer -->
-        <canvas id="genome-canvas"></canvas>
+         <!-- Background Image for this section -->
+         <div class="background-container">
+            <div class="background-image"></div>
+         </div>
+
+        <!-- Back Button -->
+        <button id="back-button" class="back-button" aria-label="Go back to entrance">
+            <i class="fas fa-arrow-left"></i> <!-- Back Arrow Icon -->
+        </button>
+        
+        <!-- Mobile Menu Button (Hidden on Desktop) -->
+        <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Toggle mobile menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Mobile Menu Panel -->
+        <nav class="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="#coming-soon">Home</a></li>
+                <li><a href="#mission">Our Mission</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
 
         <!-- Content Sections Wrapper -->
         <div class="main-content-area">
@@ -55,7 +65,6 @@
                 <div class="section-content">
                     <h2>Illuminating the Future of RNA Therapeutics</h2>
                     <p>GeneScape Technologies is operating in stealth mode, developing groundbreaking technologies in RNA editing and analysis. Prepare for a new era in precision medicine. Stay tuned.</p>
-                    <!-- Future: Newsletter signup? -->
                 </div>
             </section>
 
@@ -70,7 +79,6 @@
                  <div class="section-content">
                     <h2>The Team</h2>
                     <p>Founded by leading experts in bioinformatics, RNA biology, and data science. Full team details coming soon.</p>
-                    <!-- Future: Team member profiles -->
                  </div>
             </section>
         </div>
@@ -78,7 +86,6 @@
         <!-- Footer -->
         <footer class="main-footer">
             <p>© <span id="copyright-year"></span> GeneScape Technologies. All rights reserved.</p>
-            <!-- Future: Social links, contact info? -->
         </footer>
     </main>
 

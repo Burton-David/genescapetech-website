@@ -1,6 +1,20 @@
 /* --- Global Settings & Font Import --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+/* ======================================================== */
+/* == @font-face RULE FOR HYPERION FONT == */
+/* ======================================================== */
+@font-face {
+    font-family: 'Hyperion'; /* The name you'll use in CSS */
+    src: url('assets/fonts/Hyperion-Regular.woff2') format('woff2'), /* Path to your WOFF2 file */
+         url('assets/fonts/Hyperion-Regular.woff') format('woff'); /* Path to your WOFF file */
+    /* Add more src lines for ttf/otf if needed */
+    font-weight: normal; /* Or the correct weight */
+    font-style: normal; /* Or the correct style */
+    font-display: swap; /* Use fallback font while loading */
+}
+/* ======================================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +26,7 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif; /* Use Poppins */
+    font-family: 'Poppins', sans-serif; /* Default font for body text */
     line-height: 1.6;
     background-color: #000; /* Dark fallback */
     color: #eee; /* Light default text */
@@ -21,12 +35,16 @@ body {
 
 /* --- CSS Variables --- */
 :root {
-    --color-primary: #00ffff; /* Cyan for hover/accent */
-    --color-secondary-accent: #ff00ff; /* Magenta accent */
-    --color-dark-text: #222222; /* Dark grey for title */
-    --color-light-text: #f0f0f0; /* Light text for main content */
-    --color-main-bg-overlay: rgba(15, 25, 40, 0.7); /* Dark blueish overlay for content cards */
-    --blur-intensity: 8px; /* Blur effect for cards */
+    --font-title: 'Hyperion', sans-serif; /* Use Hyperion for title */
+    --font-body: 'Poppins', sans-serif;
+    --color-primary: #D91F1C; /* Red accent from background */
+    --color-secondary-accent: #C9AB7C; /* Gold/tan accent from background */
+    --color-dark-text: #1D1D1D; /* Near black from background */
+    --color-light-text: #F5F5F5; /* Off-white for text */
+    --color-title-initial: #C9AB7C; /* Gold/tan for title to match background */
+    --color-main-bg-overlay: rgba(29, 29, 29, 0.75); /* Dark overlay for content cards */
+    --color-content-bg: rgba(0, 0, 0, 0.7); /* Semi-transparent black for content background */
+    --blur-intensity: 6px; /* Blur effect for cards */
 }
 
 /* --- Entrance Screen --- */
@@ -55,17 +73,19 @@ body {
 }
 
 #company-name {
+    font-family: var(--font-title); /* Use Hyperion font */
     font-size: 3rem; /* Base size */
-    font-weight: 600;
-    color: var(--color-dark-text); /* Changed to dark grey */
-    /* Subtle white glow/shadow to lift off the video */
+    font-weight: normal; /* Hyperion likely works best with normal weight */
+    color: var(--color-title-initial); /* Gold/tan to match background theme */
+    /* Enhanced text shadow for better visibility against the patterned background */
     text-shadow:
-        0 0 5px rgba(255, 255, 255, 0.7),
-        0 0 10px rgba(255, 255, 255, 0.5),
-        1px 1px 2px rgba(0, 0, 0, 0.3);
+        0 0 5px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(0, 0, 0, 0.6),
+        1px 1px 3px rgba(0, 0, 0, 0.5);
     margin: 0; padding: 15px 30px; /* More padding */
     transition: color 0.3s ease, text-shadow 0.4s ease;
     position: relative; z-index: 1;
+    letter-spacing: 2px; /* Improved letter spacing */
 }
 
 #title-container::after { /* "Enter" prompt */
@@ -78,12 +98,12 @@ body {
 }
 
 #title-container:hover #company-name {
-    color: var(--color-primary); /* Bright cyan on hover */
-    text-shadow: /* Brighter cyan glow */
-        0 0 8px rgba(0, 255, 255, 0.9),
-        0 0 15px rgba(0, 255, 255, 0.7),
-        0 0 25px rgba(0, 255, 255, 0.5),
-        1px 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-primary); /* Red accent color on hover */
+    text-shadow: /* Red glow with better contrast against background */
+        0 0 8px rgba(217, 31, 28, 0.7),
+        0 0 15px rgba(217, 31, 28, 0.5),
+        0 0 25px rgba(217, 31, 28, 0.4),
+        1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 #title-container:hover::after {
@@ -98,14 +118,7 @@ body {
    background-color: #050a10; /* Dark fallback if image fails */
 }
 
-#main-bg { /* Static background image for this section */
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1; background-size: cover; background-position: center center;
-    background-repeat: no-repeat;
-    background-image: url('images/image2.png'); /* Ensure path is correct */
-    background-attachment: fixed; /* Parallax effect */
-    filter: brightness(0.7); /* Slightly darken bg image */
-}
+/* Removed the #main-bg section as we're using .background-image instead */
 
 #genome-canvas { /* Subtle animation layer */
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -182,4 +195,311 @@ body {
     /* Optional: 2-column layout for sections on wider screens */
     /* .main-content-area { grid-template-columns: 1fr 1fr; } */
     /* #coming-soon { grid-column: 1 / -1; } /* Make first section span full width */
+}
+
+
+  
+  /* --- Background Image Styling --- */
+.background-container {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  overflow: hidden; z-index: 1; background-color: #1D1D1D; /* Dark fallback */
+}
+.background-image {
+  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
+    background-image: url('assets/images/BioWebsiteBackground.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.95; /* Slightly dim the background for better text contrast */
+}
+  
+  /* --- Entrance Screen --- */
+  #entrance-screen {
+      min-height: 100vh; width: 100%; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 1; /* Make sure it's visible initially */
+      visibility: visible;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* For fade transition */
+  }
+  #entrance-screen.hidden { /* Class added by JS for fade out */
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+  }
+  
+  
+  .animation-overlay {
+      position: relative; z-index: 10; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; width: 100%; height: 100%; padding: 20px;
+  }
+  
+  #title-container { position: relative; cursor: pointer; text-align: center; }
+  
+  #company-name {
+      font-family: var(--font-title); /* Apply Hyperion font */
+      font-size: 3.5rem; /* Base size */
+      font-weight: normal; /* Adjust if Hyperion has specific weights */
+      color: var(--color-title-initial); /* Clean initial color */
+      text-shadow: none; /* NO initial shadow */
+      margin: 0; padding: 15px 30px;
+      transition: color 0.3s ease, text-shadow 0.3s ease; /* Keep transition */
+      position: relative; z-index: 1;
+      letter-spacing: 1px; /* Optional: Adjust spacing */
+  }
+  
+  #title-container::after { /* "Enter" prompt */
+      content: 'Enter'; position: absolute; bottom: -5px; left: 50%;
+      transform: translateX(-50%); font-size: 1rem; font-weight: 400;
+      font-family: var(--font-body); /* Use body font for prompt */
+      color: var(--color-primary);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      opacity: 0; transition: opacity 0.3s ease, bottom 0.3s ease;
+      pointer-events: none;
+  }
+  
+  #title-container:hover #company-name {
+      color: var(--color-primary); /* Bright cyan on hover */
+      /* Add subtle glow on hover only */
+      text-shadow:
+          0 0 8px rgba(0, 255, 255, 0.8),
+          0 0 15px rgba(0, 255, 255, 0.6);
+  }
+  
+  #title-container:hover::after { opacity: 1; bottom: -20px; }
+  
+  /* --- Main Content Area --- */
+  #main-content {
+     display: none; /* Shown by JS */
+     min-height: 100vh; width: 100%; position: relative; overflow: hidden;
+     padding: 100px 0 60px 0; /* Adjust padding */
+     opacity: 0; /* Start hidden for fade-in */
+     visibility: hidden;
+     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  }
+  #main-content.visible { /* Class added by JS for fade in */
+      opacity: 1;
+      visibility: visible;
+  }
+  
+  
+  .main-content-area { /* Container for sections, sits above background */
+      position: relative;
+      z-index: 5; /* Above background */
+      width: 90%;
+      max-width: 950px; /* Adjust max width */
+      margin: 0 auto;
+      display: flex; /* Use flex for simpler stacking */
+      flex-direction: column;
+      gap: 50px; /* Space between sections */
+      transition: transform 0.4s ease-in-out; /* For mobile menu animation */
+  }
+  
+  /* Mobile menu open state */
+  .mobile-menu-open {
+      transform: translateX(-280px); /* Slide content to reveal menu */
+  }
+  
+  /* Mobile Menu Styles */
+  .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -280px; /* Start off-screen */
+      width: 280px;
+      height: 100%;
+      background-color: var(--color-content-bg);
+      backdrop-filter: blur(var(--blur-intensity));
+      -webkit-backdrop-filter: blur(var(--blur-intensity));
+      z-index: 4; /* Below content when closed, above when open */
+      transition: right 0.4s ease-in-out;
+      padding: 80px 20px 20px;
+      border-left: 1px solid rgba(201, 171, 124, 0.2);
+  }
+  
+  .mobile-menu-open + .mobile-menu {
+      right: 0; /* Slide in when menu is open */
+  }
+  
+  /* Mobile Menu Navigation Links */
+  .mobile-nav-links {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+  }
+  
+  .mobile-nav-links li {
+      margin-bottom: 15px;
+  }
+  
+  .mobile-nav-links a {
+      display: block;
+      padding: 12px 15px;
+      color: var(--color-light-text);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      border-left: 3px solid transparent;
+      transition: all 0.3s ease;
+  }
+  
+  .mobile-nav-links a:hover, .mobile-nav-links a:focus {
+      background-color: rgba(217, 31, 28, 0.2); /* Slight red highlight */
+      border-left-color: var(--color-primary);
+      padding-left: 20px; /* Slight indent on hover */
+  }
+  
+  .content-section {
+  /* Styling for individual content sections */
+  background: var(--color-content-bg); /* Semi-transparent background */
+  padding: 30px 40px;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 171, 124, 0.2); /* Gold/tan border to match theme */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow for depth */
+    backdrop-filter: blur(var(--blur-intensity));
+    -webkit-backdrop-filter: blur(var(--blur-intensity));
+}
+  
+  .content-section h2 {
+  font-family: var(--font-body); /* Use Poppins for headings */
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(201, 171, 124, 0.5); /* Gold/tan border */
+  display: inline-block;
+    letter-spacing: 0.5px; /* Slight letter spacing for better readability */
+}
+  
+  .content-section p {
+      font-family: var(--font-body);
+      font-size: 1.05rem; /* Slightly larger body text */
+      color: var(--color-light-text);
+      line-height: 1.8; /* Increase line height for readability */
+  }
+  
+  /* --- Navigation Buttons --- */
+
+/* Common styles for navigation buttons */
+.nav-button-base {
+  position: fixed;
+  z-index: 100; /* Above everything */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--color-light-text);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%; /* Make it round */
+  width: 45px; /* Fixed size */
+  height: 45px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; /* Center icon */
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+/* Back Button */
+.back-button {
+    composes: nav-button-base;
+  top: 25px;
+  left: 25px;
+  opacity: 0; /* Hidden initially */
+  visibility: hidden;
+    pointer-events: none; /* Disabled initially */
+}
+
+#main-content.visible .back-button { /* Show when main content is visible */
+     opacity: 0.8;
+     visibility: visible;
+   pointer-events: auto;
+     transition-delay: 0.5s; /* Delay appearance slightly */
+}
+  
+.back-button:hover, .mobile-menu-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-light-text);
+    transform: scale(1.1);
+    border-color: var(--color-secondary-accent);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-button {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--color-light-text);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: none; /* Hidden by default, shown on mobile */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#main-content.visible .mobile-menu-button {
+    opacity: 0.8;
+    visibility: visible;
+    transition-delay: 0.5s;
+}
+
+.nav-button-base i, .back-button i, .mobile-menu-button i { /* Style icon */
+    line-height: 1; /* Prevent icon alignment issues */
+}
+  
+  
+  /* --- Footer --- */
+  .main-footer {
+      position: relative; z-index: 5; padding: 30px 20px;
+      text-align: center; margin-top: 40px; /* Reduced margin */
+      color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  }
+  
+  /* --- Responsive Adjustments --- */
+@media (min-width: 768px) {
+  #company-name { font-size: 5rem; }
+  .main-content-area { width: 85%; gap: 60px; }
+  .content-section h2 { font-size: 2rem; }
+  .content-section p { font-size: 1.1rem; }
+    .background-image { background-position: center center; }
+}
+
+@media (min-width: 1024px) {
+    #company-name { font-size: 6rem; letter-spacing: 2px;}
+    .main-content-area { width: 75%; max-width: 1000px; gap: 70px; }
+  /* Enhanced parallax effect only on desktop */
+  .background-image { transition: transform 1.5s ease-out; }
+}
+
+@media (max-width: 767px) {
+    /* Tablet adjustments */
+    #company-name { font-size: 3.5rem; }
+    .main-content-area { width: 90%; }
+    .content-section { padding: 25px; }
+    /* Position background differently on tablet */
+    .background-image { background-position: 70% center; }
+    /* Show mobile menu button on tablets */
+    .mobile-menu-button { display: flex; }
+}
+
+@media (max-width: 480px) { 
+    /* Smaller mobile adjustments */
+    #company-name { font-size: 2.8rem; padding: 10px 15px; letter-spacing: 1px; }
+    .content-section { padding: 20px; }
+    .content-section h2 { font-size: 1.6rem; }
+    .content-section p { font-size: 0.95rem; }
+    .back-button { width: 40px; height: 40px; font-size: 0.9rem; top: 15px; left: 15px;}
+    .mobile-menu-button { width: 40px; height: 40px; font-size: 0.9rem; top: 15px; right: 15px; }
+    /* Position background differently on mobile for better visibility */
+    .background-image { background-position: 80% center; }
+    /* Disable parallax on mobile for better performance */
+    .background-image { transition: none; }
 }
