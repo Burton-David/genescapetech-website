@@ -213,7 +213,12 @@ if __name__ == "__main__":
                     except NoSuchElementException: error_msg = "Could not find title container element to click."; print(f"  Interaction Error: {error_msg}", file=sys.stderr); viewport_results['interaction_error'] = error_msg
                     except Exception as e: error_msg = f"An unexpected error occurred during interaction: {e}"; print(f"  Interaction Error: {error_msg}", file=sys.stderr); viewport_results['interaction_error'] = error_msg
             except TimeoutException: print(f"  Timeout waiting for initial page load elements on {name} viewport.", file=sys.stderr); viewport_results['initial_logs'] = get_console_logs(driver)
-            except Exception as e: print(f"  An error occurred during testing {name} viewport: {e}", file=sys.stderr); try: viewport_results['initial_logs'] = get_console_logs(driver); except: pass
+            except Exception as e:
+                print(f"  An error occurred during testing {name} viewport: {e}", file=sys.stderr)
+                try:
+                    viewport_results['initial_logs'] = get_console_logs(driver)
+                except Exception as log_error:
+                    print(f"  An error occurred while retrieving logs: {log_error}", file=sys.stderr)
 
     finally:
         print("\n--- Analysis Complete ---")

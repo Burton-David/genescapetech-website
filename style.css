@@ -293,13 +293,26 @@ body.no-scroll {
     .back-button { left: 20px; }
     .mobile-menu-button { right: 20px; }
 }
+/* Specific fix for title breaking on narrow screens */
+@media (max-width: 520px) { /* Target slightly wider than smallest phones */
+    #company-name {
+        font-size: 2.6rem; /* Reduce font size significantly */
+        letter-spacing: 0.5px; /* Slightly reduce spacing too */
+        line-height: 1.15; /* Adjust line height if it breaks to two lines */
+        padding: 10px 5px; /* Reduce padding */
+    }
+    #title-container::after { /* Adjust "Enter" prompt position */
+       font-size: 0.9rem;
+       bottom: -18px;
+    }
+     #title-container:hover::after {
+       bottom: -22px;
+    }
+}
 
-@media (max-width: 480px) { /* Specific small mobile */
-    #company-name { font-size: 2.4rem; padding: 10px; letter-spacing: 0.5px;}
-    /* Force line break if still needed - USE WITH CAUTION */
-    /* #company-name::after { content: '\A'; white-space: pre; } */
-    .content-section { padding: 20px 15px; }
-    .content-section h2 { font-size: 1.4rem; }
-    .content-section p { font-size: 0.9rem; }
-    .mobile-menu { width: 260px; right: -260px; }
+@media (max-width: 400px) { /* Even smaller screens */
+     #company-name {
+        font-size: 2.3rem; /* Further reduction */
+         letter-spacing: 0px;
+    }
 }
