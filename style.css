@@ -5,217 +5,177 @@
     box-sizing: border-box;
 }
 
-/* Define CSS Variables for Colors (Sampled from images - adjust as needed) */
+/* Define CSS Variables for Colors */
 :root {
-    /* Entrance Screen Palette (Image 1) */
-    --color-entrance-dark: #3a0a3e; /* Deep magenta/purple */
-    --color-entrance-mid: #e88c0c;  /* Orange/Yellow */
-    --color-entrance-bright: #fef200;/* Bright Yellow */
-    --color-entrance-accent: #1fae9f; /* Teal */
-    --color-entrance-bg-fallback: #1a082d;
+    /* Entrance Screen Palette (Adjust based on video/preference) */
+    --color-entrance-dark: #1a082d;
+    --color-entrance-mid: #e88c0c;
+    --color-entrance-bright: #fef200;
+    --color-entrance-accent: #1fae9f;
+    --color-entrance-text: #ffffff; /* White text for entrance */
+    --color-entrance-hover: #00ffff; /* Cyan/bright color for hover */
 
-    /* Main Content Palette (Image 2) */
-    --color-main-dark: #0b3d4a;   /* Dark Teal/Blue */
-    --color-main-mid: #9e2a3f;    /* Muted Red */
-    --color-main-light: #f0f0f0;  /* Off-white/Light Grey (for text maybe) */
-    --color-main-accent: #d4a05d; /* Gold/Yellow */
+    /* Main Content Palette */
+    --color-main-dark: #0b3d4a;
+    --color-main-mid: #9e2a3f;
+    --color-main-light: #f0f0f0;
+    --color-main-accent: #d4a05d;
     --color-main-bg-fallback: #e8f0f2;
     --color-text-light: #ffffff;
     --color-text-dark: #333333;
 }
 
 html {
-    scroll-behavior: smooth; /* Enable smooth scrolling */
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: sans-serif; /* Basic fallback font */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nicer font stack */
     line-height: 1.6;
-    background-color: var(--color-entrance-bg-fallback); /* Fallback */
+    background-color: var(--color-entrance-dark); /* Fallback */
     color: var(--color-text-light);
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
 }
 
 /* --- Section Styling --- */
-
 #entrance-screen, #main-content {
-    min-height: 100vh; /* Ensure sections take at least full viewport height */
+    min-height: 100vh;
     width: 100%;
-    position: relative; /* Needed for absolute positioning of children */
-    overflow: hidden; /* Hide overflowing animated elements */
-    display: flex; /* Using flex for potential centering */
+    position: relative;
+    overflow: hidden;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Initially hide main content */
 #main-content {
-   display: none; /* Will be shown via JS after entrance */
+   display: none;
    background-color: var(--color-main-bg-fallback);
-   flex-direction: column; /* Stack content vertically */
+   flex-direction: column;
 }
 
-/* Background Image Layers */
-.background-layer {
+/* --- Video Background Styling --- */
+.video-background-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Behind content and animations */
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    overflow: hidden;
+    z-index: 1;
 }
 
-#entrance-bg {
-    /* Add URL to your first uploaded image */
-    background-image: url('image1.png');
-}
-
-#main-bg {
-     /* Add URL to your second uploaded image */
-    background-image: url('image2.png');
-    /* background-attachment: fixed; /* Creates parallax effect, test performance */
+.video-background-container video {
+    min-width: 100%;
+    min-height: 100%;
+    width: 100%; /* Ensure width fills container */
+    height: 100%; /* Ensure height fills container */
+    object-fit: cover; /* Cover area, maintain aspect ratio */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* filter: brightness(0.9); /* Optional adjustment */
 }
 
 /* --- Entrance Screen Specific --- */
-
 .animation-overlay {
-    position: relative; /* To position elements within it */
-    z-index: 10; /* Above background, below potential modals */
+    position: relative;
+    z-index: 10; /* Above video */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: 20px; /* Add some padding */
-     /* Add a subtle overlay maybe? Test this */
-    /* background-color: rgba(0, 0, 0, 0.1); */
+    padding: 20px;
+    /* background: rgba(0, 0, 0, 0.1); /* Optional dark overlay */
+}
+
+#title-container {
+    position: relative; /* For positioning the pseudo-element */
+    cursor: pointer; /* Indicate it's clickable */
+    text-align: center;
 }
 
 #company-name {
-    font-size: 2rem; /* Start with mobile size */
-    color: var(--color-entrance-bright);
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    text-align: center;
-    /* Add more styling as needed */
+    font-size: 2.5rem; /* Start with mobile size */
+    color: var(--color-entrance-text);
+    font-weight: 600; /* Slightly bolder */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+    margin: 0; /* Remove default margin */
+    padding: 10px 20px; /* Add padding for hover effect */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition */
+    position: relative; /* Needed for pseudo-elements if used later */
+    z-index: 1; /* Ensure text is above potential background elements */
 }
 
+/* Integrated "Enter" Prompt on Hover */
+#title-container::after {
+    content: 'Enter';
+    position: absolute;
+    bottom: -5px; /* Position below the title */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: var(--color-entrance-hover);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+    pointer-events: none; /* Don't interfere with clicks */
+}
+
+#title-container:hover #company-name {
+    color: var(--color-entrance-hover); /* Change title color on hover */
+    text-shadow: 1px 1px 4px rgba(0, 255, 255, 0.5); /* Change shadow */
+}
+
+#title-container:hover::after {
+    opacity: 1; /* Show "Enter" on hover */
+    bottom: -15px; /* Move it down slightly */
+}
+
+
+/* Hide the actual button - interaction is via title-container */
 #enter-button {
-    margin-top: 20px;
-    padding: 10px 25px;
-    font-size: 1rem;
-    background-color: var(--color-entrance-mid);
-    color: var(--color-text-light);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 11; /* Ensure it's clickable */
+    display: none !important;
 }
 
-#enter-button:hover {
-    background-color: var(--color-entrance-accent);
-}
-
-.cylinder-mask {
-    position: absolute;
-    top: 40%; /* Adjust vertical position */
-    left: 0;
-    width: 100%;
-    height: 20%; /* Adjust height of the band */
-    overflow: hidden; /* The crucial part */
-    z-index: 5; /* Between background and text */
-    pointer-events: none; /* Allow clicks to pass through */
-    /* Add perspective here later for desktop? */
-}
-
-.cylinder-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    /* Width will be very large, set by JS or many repeating elements */
-    /* display: flex; */ /* Useful for aligning generated squares */
-    /* Background/elements mimicking the image center will go here */
-    background-color: rgba(0, 0, 0, 0.2); /* Temporary placeholder */
-}
 
 /* --- Main Content Specific --- */
-
 #genome-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2; /* Above background, below content wrapper */
-    pointer-events: none; /* Allow interaction with content below */
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 2; pointer-events: none;
+}
+
+#main-bg { /* Rule for the second background image */
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; background-size: cover; background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url('images/image2.png'); /* Make sure this path is correct */
 }
 
 .content-wrapper {
-    position: relative;
-    z-index: 3; /* Above canvas */
-    width: 90%;
-    max-width: 900px; /* Limit max width on desktop */
-    margin: 50px auto; /* Centering and spacing */
-    padding: 30px;
-    background-color: rgba(11, 61, 74, 0.8); /* Semi-transparent dark background (from main palette) */
-    border-radius: 8px;
-    color: var(--color-text-light);
+    position: relative; z-index: 3; /* Above canvas and main-bg */
+    width: 90%; max-width: 900px; margin: 50px auto; padding: 30px;
+    background-color: rgba(11, 61, 74, 0.85); /* Slightly more opaque */
+    border-radius: 8px; color: var(--color-text-light);
 }
-
-.content-wrapper h2 {
-    color: var(--color-main-accent);
-    margin-bottom: 15px;
-}
-
-footer {
-   /* Basic footer styles */
-   padding: 20px;
-   text-align: center;
-   margin-top: 40px;
-   color: var(--color-main-light);
-   font-size: 0.9rem;
-}
-
+.content-wrapper h2 { color: var(--color-main-accent); margin-bottom: 15px; }
+footer { padding: 20px; text-align: center; margin-top: 40px; color: var(--color-main-light); font-size: 0.9rem; }
 
 /* --- Responsive Adjustments --- */
-
-/* Tablet */
 @media (min-width: 768px) {
-    #company-name {
-        font-size: 3rem;
-    }
-
-    .content-wrapper {
-        width: 80%;
-        padding: 40px;
-    }
-
-    .cylinder-mask {
-        height: 25%; /* Make band larger */
-    }
+    #company-name { font-size: 3.5rem; }
+    .content-wrapper { width: 80%; padding: 40px; }
+}
+@media (min-width: 1024px) {
+    #company-name { font-size: 4.5rem; }
+    .content-wrapper { width: 70%; padding: 50px; }
 }
 
-/* Desktop */
-@media (min-width: 1024px) {
-    #company-name {
-        font-size: 4rem;
-    }
-
-     .content-wrapper {
-        width: 70%;
-        padding: 50px;
-    }
-
-    .cylinder-mask {
-        height: 30%;
-        /* Consider adding perspective here */
-        /* perspective: 1000px; */
-    }
-
-    /* Enhance animations if needed */
+/* --- Glitch Animation Placeholders (if needed) --- */
+/* We might add temporary classes via JS during the glitch */
+.glitch-active {
+    /* Styles applied during glitch */
 }

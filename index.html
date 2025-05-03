@@ -3,87 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeneScape Technologies - Coming Soon</title>
+    <title>GeneScape Technologies - Entering the Future</title> <!-- Updated Title -->
     <link rel="stylesheet" href="style.css">
-    <!-- Favicon links (optional but recommended) - generate favicons and place them here -->
+    <!-- Favicon links (optional but recommended) -->
     <!-- <link rel="icon" href="/favicon.ico" sizes="any"> -->
     <!-- <link rel="icon" href="/icon.svg" type="image/svg+xml"> -->
     <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
 </head>
 <body>
 
-    <!-- Entrance Screen (First Image Background) -->
+    <!-- Entrance Screen -->
     <section id="entrance-screen">
-        <div class="background-layer" id="entrance-bg">
-            <!-- Static background image will be set via CSS -->
-            <!-- You should have added the image path in style.css -->
+        <!-- Video Background Container -->
+        <div class="video-background-container">
+            <video id="entranceVideo" autoplay loop muted playsinline poster="images/image1.png">
+                <!-- Video source is in the root directory -->
+                <source src="Intro_video.mp4" type="video/mp4">
+                <!-- Add other formats like webm if available -->
+                <!-- <source src="Intro_video.webm" type="video/webm"> -->
+                Your browser does not support the video tag. (Fallback text)
+            </video>
         </div>
+        <!-- End Video Background Container -->
+
+        <!-- Animation Overlay (Text, Button, etc.) -->
         <div class="animation-overlay">
-            <!-- Waterfall animation elements might go here or in a separate canvas -->
-
-            <!-- Area for the rotating cylinder illusion -->
-            <div class="cylinder-mask">
-                <div class="cylinder-content">
-                    <!-- Animated square/rectangle elements mimicking the image's central band will be generated/placed here by JavaScript -->
-                    <!-- Placeholder content (optional for testing): -->
-                    <!-- <div style="width: 2000px; height: 100%; background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red); opacity: 0.5;"></div> -->
-                </div>
-            </div>
-
             <!-- Company Name - Target for particle animation -->
-            <h1 id="company-name" aria-label="GeneScape Technologies">
-                <!-- Text content might be added dynamically by JS animation, or start empty -->
-            </h1>
-
-            <!-- Enter Button - Initially hidden -->
-            <button id="enter-button" style="display: none;">Enter</button>
+            <!-- Wrap in a container for easier hover effect handling -->
+            <div id="title-container">
+                 <h1 id="company-name" aria-label="GeneScape Technologies">
+                     <!-- Text content added dynamically by JS -->
+                 </h1>
+                 <!-- Enter prompt will be integrated visually via CSS/JS on hover -->
+            </div>
+             <!-- Hidden button, might not be needed if title click works -->
+             <button id="enter-button" style="display: none; opacity: 0; pointer-events: none;">Enter</button>
         </div>
+        <!-- End Animation Overlay -->
     </section>
 
     <!-- Main Content Area (Second Image Background) -->
     <main id="main-content" style="display: none;"> <!-- Initially hidden -->
         <div class="background-layer" id="main-bg">
-            <!-- Static background image set via CSS -->
-            <!-- You should have added the image path in style.css -->
-
-            <!-- Canvas for the subtle genome sequence animation -->
+            <!-- Static background image set via CSS (image2.png) -->
             <canvas id="genome-canvas"></canvas>
         </div>
-
-        <!-- Wrapper for the actual content, styled with a semi-transparent background -->
         <div class="content-wrapper">
             <section id="coming-soon">
                 <h2>Coming Soon</h2>
                 <p>GeneScape Technologies is preparing for launch. Stay tuned for updates on our groundbreaking work in RNA editing and analysis.</p>
-                <!-- Maybe add a newsletter signup form placeholder later? -->
             </section>
-
-            <!-- Structure for future content sections -->
             <section id="mission" style="/* display: none; Initially hidden until content is ready */">
                 <h2>Our Mission</h2>
                 <p><!-- Placeholder --></p>
             </section>
-
             <section id="team" style="/* display: none; Initially hidden until content is ready */">
                 <h2>The Team</h2>
                  <p><!-- Placeholder --></p>
-                 <!-- Team member profiles could go here -->
             </section>
         </div>
-
-        <!-- Optional Footer Area -->
         <footer>
             <p>© <span id="copyright-year"></span> GeneScape Technologies. All rights reserved.</p>
-            <!-- Add any other footer links or info here -->
         </footer>
     </main>
 
     <!-- ==== SCRIPTS ==== -->
 
-    <!-- GSAP Core Library (Make sure this is included) -->
+    <!-- GSAP Core Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <!-- Optional: If we need scroll-based animations later -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script> -->
+    <!-- GSAP ScrollToPlugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollToPlugin.min.js"></script>
+    <!-- GSAP TextPlugin (Potentially useful for glitch effect) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js"></script>
+
 
     <!-- Your Custom JavaScript File -->
     <script src="script.js"></script>
@@ -92,8 +84,6 @@
     <script>
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
     </script>
-    <!-- GSAP ScrollToPlugin (for smooth scrolling) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollToPlugin.min.js"></script>
-    
+
 </body>
 </html>
