@@ -16,39 +16,42 @@
     <!-- <link rel="icon" href="/icon.svg" type="image/svg+xml"> -->
     <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
 </head>
-<body>
+<body class="no-scroll"> <!-- Start with scrolling disabled -->
 
     <!-- Entrance Screen -->
     <section id="entrance-screen">
-        <!-- Static Background for Entrance -->
         <div class="background-container">
-            <div class="background-image" id="entrance-background-image"></div> <!-- Specific ID for entrance BG -->
+            <div class="background-image" id="entrance-background-image"></div>
         </div>
         <div class="animation-overlay">
             <div id="title-container">
                  <h1 id="company-name" aria-label="GeneScape Technologies">
                      <!-- Text content added dynamically by JS -->
                  </h1>
-                 <!-- "Enter" prompt added via CSS -->
             </div>
         </div>
     </section>
 
     <!-- Main Content Area -->
-    <main id="main-content" style="display: none;"> <!-- Starts hidden -->
-         <!-- Static Background for Main Content (Same Image) -->
+    <main id="main-content"> <!-- Removed inline style -->
          <div class="background-container">
-            <div class="background-image" id="main-background-image"></div> <!-- Specific ID for main BG -->
+            <div class="background-image" id="main-background-image"></div>
          </div>
+
+        <!-- Fixed Header for Main Content -->
+        <header class="main-header">
+            <div class="header-logo">GeneScape Tech</div> <!-- Simple text logo -->
+            <!-- Could add nav links here for desktop later -->
+        </header>
 
         <!-- Back Button -->
         <button id="back-button" class="nav-button back-button" aria-label="Go back to entrance">
             <i class="fas fa-arrow-left"></i>
         </button>
 
-        <!-- Mobile Menu Button (Hidden on Desktop) -->
+        <!-- Mobile Menu Button -->
         <button id="mobile-menu-button" class="nav-button mobile-menu-button" aria-label="Toggle mobile menu">
-            <i class="fas fa-bars"></i> <!-- Initial icon -->
+            <i class="fas fa-bars"></i>
         </button>
 
         <!-- Mobile Menu Panel -->
@@ -61,7 +64,6 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-        <!-- Overlay for closing menu when clicking outside -->
         <div class="mobile-menu-overlay"></div>
 
         <!-- Content Sections Wrapper -->
@@ -90,7 +92,7 @@
             <section id="contact" class="content-section">
                  <div class="section-content">
                     <h2>Contact</h2>
-                    <p>Inquiries can be directed to [email protected] (Replace with actual email or form later).</p>
+                    <p>Inquiries can be directed to [email protected] (Replace later).</p>
                  </div>
             </section>
         </div>

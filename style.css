@@ -1,13 +1,12 @@
 /* --- Global Settings & Font Definition --- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'); /* Poppins for body */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 /* ======================================================== */
 /* == VERIFY @font-face RULE FOR YOUR HYPERION FONT == */
 /* ======================================================== */
 @font-face {
-  font-family: 'Hyperion'; /* The name you'll use in CSS */
-  /* Assuming fonts are in 'assets/fonts/' relative to project root */
-  /* Adjust path if your structure is different */
+  font-family: 'Hyperion';
+  /* === VERIFY THIS PATH === */
   src: url('assets/fonts/Hyperion-Regular.woff2') format('woff2'),
        url('assets/fonts/Hyperion-Regular.woff') format('woff');
   font-weight: normal;
@@ -21,27 +20,31 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: 'Poppins', sans-serif;
-    line-height: 1.7; /* Slightly more spacing */
-    background-color: #101010; /* Very dark fallback */
-    color: #EAEAEA; /* Default light text */
+    line-height: 1.7;
+    background-color: #101010;
+    color: #EAEAEA;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased; /* Smoother text */
+    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+/* Prevent body scroll when entrance is active */
+body.no-scroll {
+    overflow: hidden;
+}
 
-/* --- CSS Variables (Derived from new image) --- */
+/* --- CSS Variables --- */
 :root {
-    --font-title: 'Hyperion', Impact, sans-serif; /* Hyperion with fallbacks */
+    --font-title: 'Hyperion', Impact, sans-serif;
     --font-body: 'Poppins', sans-serif;
     --color-red-accent: #D91F1C;
     --color-gold-accent: #C9AB7C;
     --color-tan-accent: #BB9671;
-    --color-dark-bg: #1D1D1D; /* Near black */
-    --color-light-text: #F5F5F5;
-    --color-title-initial: var(--color-gold-accent); /* Gold for title */
-    --color-hover-accent: var(--color-red-accent); /* Red for hover */
-    --content-bg: rgba(20, 20, 20, 0.85); /* Very dark, slightly transparent bg for content */
-    --content-border: rgba(201, 171, 124, 0.3); /* Subtle gold border */
+    --color-dark-bg: #1D1D1D;
+    --color-light-text: #F5F5F5; /* Using this for initial title */
+    --color-hover-accent: var(--color-red-accent);
+    --content-bg: rgba(20, 20, 20, 0.85);
+    --content-border: rgba(201, 171, 124, 0.3);
+    --header-height: 70px; /* Define header height */
 }
 
 /* --- Background Image Styling --- */
@@ -57,15 +60,13 @@ body {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.85; /* Slightly dim */
-  /* Parallax will be applied via JS */
-  will-change: transform; /* Optimize for parallax */
+  opacity: 0.85;
+  will-change: transform;
 }
 #main-background-image {
-    background-attachment: fixed; /* Fixed background for main content */
-    opacity: 0.7; /* Dim main background slightly more */
+    background-attachment: fixed;
+    opacity: 0.7;
 }
-
 
 /* --- Entrance Screen --- */
 #entrance-screen {
@@ -85,16 +86,13 @@ body {
 
 #title-container { position: relative; cursor: pointer; text-align: center; }
 
-/* Find this rule */
 #company-name {
     font-family: var(--font-title);
     font-size: 3.8rem;
     font-weight: normal;
-    /* === CHANGE THIS LINE === */
-    color: var(--color-light-text); /* Use light text color for initial state */
-    /* === CHANGE/ADD THIS LINE === */
-    /* Add a subtle dark shadow for better separation */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6), 0 0 5px rgba(0, 0, 0, 0.4);
+    color: var(--color-light-text); /* CORRECTED Initial Color */
+    /* CORRECTED Initial Shadow for light text */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.5);
     margin: 0; padding: 15px 30px;
     transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
     position: relative; z-index: 1;
@@ -102,211 +100,206 @@ body {
     will-change: transform, color, text-shadow;
 }
 
-/* The hover rule remains the same (changes color to red accent with red glow) */
+#title-container::after { /* "Enter" prompt */
+    content: 'Enter'; position: absolute; bottom: -5px; left: 50%;
+    transform: translateX(-50%); font-size: 1rem; font-weight: 400;
+    font-family: var(--font-body);
+    color: var(--color-hover-accent);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    opacity: 0; transition: opacity 0.3s ease, bottom 0.3s ease;
+    pointer-events: none;
+}
+
 #title-container:hover #company-name {
     color: var(--color-hover-accent); /* Red on hover */
-    text-shadow: /* Brighter Red Glow on hover */
+    text-shadow: /* Brighter Red Glow */
         0 0 10px rgba(217, 31, 28, 0.7),
         0 0 20px rgba(217, 31, 28, 0.5),
         1px 1px 2px rgba(0, 0, 0, 0.4);
     transform: scale(1.02);
 }
 
-#title-container::after { /* "Enter" prompt */
-    content: 'Enter'; position: absolute; bottom: -5px; left: 50%;
-    transform: translateX(-50%); font-size: 1rem; font-weight: 400;
-    font-family: var(--font-body);
-    color: var(--color-hover-accent); /* Red prompt */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    opacity: 0; transition: opacity 0.3s ease, bottom 0.3s ease;
-    pointer-events: none;
-}
-
-
-
-#title-container:hover::after { opacity: 1; bottom: -25px; } /* Move prompt further down */
+#title-container:hover::after { opacity: 1; bottom: -25px; }
 
 
 /* --- Main Content Area --- */
 #main-content {
-    /* display: none; REMOVE this line - JS handles initial state now */
-    display: flex; /* Set display:flex for layout calculations */
-    opacity: 0; /* Start invisible */
-    visibility: hidden; /* Start hidden */
-    min-height: 100vh; width: 100%; position: relative; overflow: hidden;
-    padding: 120px 0 80px 0;
-    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
- }
- #main-content.visible { /* Class added by JS for fade in */
-     opacity: 1;
-     visibility: visible;
- }
+   display: flex; /* Use flex for layout calc */
+   opacity: 0; visibility: hidden; /* Start hidden */
+   flex-direction: column; /* Stack header, content, footer */
+   min-height: 100vh; width: 100%; position: relative; overflow: auto; /* Allow scrolling */
+   /* Padding moved to main-content-area */
+   transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+}
+#main-content.visible { opacity: 1; visibility: visible; }
 
- 
+/* --- Main Header (Post-Entrance) --- */
+.main-header {
+    position: fixed; /* Fixed header */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: rgba(20, 20, 20, 0.8); /* Match content bg */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 90; /* Above main content, below nav buttons/menu */
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    border-bottom: 1px solid var(--content-border);
+    opacity: 0; /* Hidden initially */
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    transition-delay: 0.5s; /* Delay appearance */
+}
+#main-content.visible .main-header { /* Show when main content is visible */
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
 
-.main-content-area { /* Container for sections */
-    position: relative; z-index: 5; /* Above background */
-    width: 90%; max-width: 900px; /* Adjusted max-width */
+.header-logo {
+    font-family: var(--font-title); /* Use Hyperion */
+    font-size: 1.5rem;
+    color: var(--color-gold-accent);
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.main-content-area {
+    position: relative; z-index: 5;
+    width: 90%; max-width: 900px;
     margin: 0 auto; display: flex; flex-direction: column;
-    gap: 60px; /* Increased gap */
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); /* Smooth slide */
+    gap: 60px;
+    padding-top: calc(var(--header-height) + 60px); /* Add padding for fixed header + space */
+    padding-bottom: 60px; /* Bottom padding */
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* --- Content Section Redesign --- */
-.content-section {
-    background: var(--content-bg); /* Use variable */
-    padding: 35px 45px; /* Increased padding */
-    border-radius: 6px; /* Slightly less rounded */
-    border-left: 4px solid var(--color-gold-accent); /* Accent border on left */
+.content-section { /* Same styles as before */
+    background: var(--content-bg); padding: 35px 45px;
+    border-radius: 6px; border-left: 4px solid var(--color-gold-accent);
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
-    /* Removed backdrop-filter for performance and cleaner look */
 }
-
-.content-section h2 {
-    font-family: var(--font-body);
-    font-size: 1.7rem; /* Adjusted size */
-    font-weight: 600;
-    color: var(--color-gold-accent); /* Gold heading */
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--content-border); /* Use gold border color */
-    display: inline-block;
+.content-section h2 { /* Same styles as before */
+    font-family: var(--font-body); font-size: 1.7rem; font-weight: 600;
+    color: var(--color-gold-accent); margin-bottom: 15px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--content-border); display: inline-block;
     letter-spacing: 0.5px;
 }
-
-.content-section p {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    color: var(--color-light-text);
+.content-section p { /* Same styles as before */
+    font-family: var(--font-body); font-size: 1rem; color: var(--color-light-text);
     line-height: 1.8;
 }
-.content-section p:not(:last-child) {
-    margin-bottom: 1em; /* Space between paragraphs */
-}
+.content-section p:not(:last-child) { margin-bottom: 1em; }
 
 
 /* --- Navigation Buttons --- */
-.nav-button {
-  position: fixed; z-index: 100;
-  background-color: rgba(29, 29, 29, 0.7); /* Darker bg */
-  color: var(--color-light-text);
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Dimmer border */
-  border-radius: 50%; width: 45px; height: 45px;
-  font-size: 1rem; cursor: pointer; display: flex;
-  align-items: center; justify-content: center;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); /* Smooth transition */
-  backdrop-filter: blur(4px); /* Subtle blur */
-  -webkit-backdrop-filter: blur(4px);
-  opacity: 0; visibility: hidden; pointer-events: none; /* Start hidden */
+.nav-button { /* Same styles as before */
+  position: fixed; z-index: 100; background-color: rgba(29, 29, 29, 0.7);
+  color: var(--color-light-text); border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%; width: 45px; height: 45px; font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity: 0; visibility: hidden; pointer-events: none;
 }
 .nav-button i { line-height: 1; }
+.back-button { top: calc(var(--header-height) / 2 - 45px / 2 + 5px); left: 30px; } /* Align with header */
+.mobile-menu-button { top: calc(var(--header-height) / 2 - 45px / 2 + 5px); right: 30px; display: none; }
 
-.back-button { top: 30px; left: 30px; }
-.mobile-menu-button { top: 30px; right: 30px; display: none; } /* Hidden by default */
-
-/* Show buttons when main content is visible */
 #main-content.visible .back-button,
-#main-content.visible .mobile-menu-button {
+#main-content.visible .mobile-menu-button { /* Same styles as before */
      opacity: 0.85; visibility: visible; pointer-events: auto;
-     transition-delay: 0.6s; /* Delay appearance */
+     transition-delay: 0.6s;
 }
-
-.nav-button:hover {
-    background-color: var(--color-hover-accent); /* Red hover */
-    color: var(--color-light-text);
-    transform: scale(1.1) rotate(5deg); /* Slight rotate effect */
-    border-color: var(--color-hover-accent);
+.nav-button:hover { /* Same styles as before */
+    background-color: var(--color-hover-accent); color: var(--color-light-text);
+    transform: scale(1.1) rotate(5deg); border-color: var(--color-hover-accent);
     box-shadow: 0 0 15px rgba(217, 31, 28, 0.5);
 }
 
 /* --- Mobile Menu --- */
+/* ... (Mobile menu styles remain largely the same) ... */
 .mobile-menu {
-    position: fixed; top: 0; right: -300px; /* Start off-screen */
-    width: 300px; height: 100%;
-    background-color: rgba(20, 20, 20, 0.9); /* Darker menu bg */
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    z-index: 150; /* Above content area */
+    position: fixed; top: 0; right: -300px; width: 300px; height: 100%;
+    background-color: rgba(20, 20, 20, 0.9); backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); z-index: 150;
     transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    padding: 20px; padding-top: 80px; /* Space for close button */
-    border-left: 1px solid var(--content-border);
+    padding: 20px; padding-top: 80px; border-left: 1px solid var(--content-border);
     display: flex; flex-direction: column;
 }
-.mobile-menu-open .mobile-menu { right: 0; } /* Slide in */
-
-.close-menu-button {
-    position: absolute; top: 25px; right: 25px;
-    background: none; border: none; font-size: 1.8rem;
-    color: var(--color-light-text); cursor: pointer;
-    padding: 5px; line-height: 1; opacity: 0.7;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+.mobile-menu-open .mobile-menu { right: 0; }
+.close-menu-button { /* Styles remain same */
+    position: absolute; top: 25px; right: 25px; background: none; border: none;
+    font-size: 1.8rem; color: var(--color-light-text); cursor: pointer;
+    padding: 5px; line-height: 1; opacity: 0.7; transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .close-menu-button:hover { opacity: 1; transform: rotate(90deg); }
-
 .mobile-nav-links { list-style: none; padding: 0; margin: 20px 0; }
 .mobile-nav-links li { margin-bottom: 10px; }
-.mobile-nav-links a {
+.mobile-nav-links a { /* Styles remain same */
     display: block; padding: 12px 15px; color: var(--color-light-text);
-    text-decoration: none; font-family: var(--font-body);
-    font-size: 1.1rem; border-radius: 4px;
-    transition: all 0.2s ease-in-out;
+    text-decoration: none; font-family: var(--font-body); font-size: 1.1rem;
+    border-radius: 4px; transition: all 0.2s ease-in-out;
 }
-.mobile-nav-links a:hover, .mobile-nav-links a:focus {
-    background-color: rgba(217, 31, 28, 0.3); /* Red highlight */
-    color: #fff;
-    padding-left: 25px;
+.mobile-nav-links a:hover, .mobile-nav-links a:focus { /* Styles remain same */
+    background-color: rgba(217, 31, 28, 0.3); color: #fff; padding-left: 25px;
 }
-
-.mobile-menu-overlay { /* Dark overlay behind menu */
+.mobile-menu-overlay { /* Styles remain same */
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5); z-index: 140; /* Below menu, above content */
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-    pointer-events: none;
+    background: rgba(0, 0, 0, 0.5); z-index: 140; opacity: 0; visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease; pointer-events: none;
 }
-.mobile-menu-open .mobile-menu-overlay {
-    opacity: 1; visibility: visible; pointer-events: auto;
-}
+.mobile-menu-open .mobile-menu-overlay { opacity: 1; visibility: visible; pointer-events: auto; }
 
 
 /* --- Footer --- */
 .main-footer {
-    position: relative; z-index: 5; padding: 40px 20px; /* More padding */
-    text-align: center; margin-top: 60px;
-    color: rgba(255, 255, 255, 0.5); /* Dimmer text */
-    font-size: 0.9rem;
+    position: relative; z-index: 5; padding: 40px 20px;
+    text-align: center; /* Center align text */
+    margin-top: 60px;
+    color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;
     background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
 }
 
 /* --- Responsive Adjustments --- */
 @media (min-width: 768px) {
     #company-name { font-size: 5.5rem; letter-spacing: 3px; }
-    .main-content-area { width: 85%; gap: 70px; }
-    .content-section h2 { font-size: 2rem; }
-    .content-section p { font-size: 1.05rem; }
+    .main-content-area { width: 85%; gap: 70px; padding-top: calc(var(--header-height) + 80px); }
+    .content-section h2 { font-size: 1.8rem; } /* Adjusted H2 size */
+    .content-section p { font-size: 1rem; } /* Adjusted P size */
+    .header-logo { font-size: 1.7rem; }
 }
 
 @media (min-width: 1024px) {
     #company-name { font-size: 6.5rem; letter-spacing: 4px;}
-    .main-content-area { width: 70%; max-width: 950px; gap: 80px; }
+    .main-content-area { width: 70%; max-width: 950px; gap: 80px; padding-top: calc(var(--header-height) + 100px); }
 }
 
-@media (max-width: 767px) { /* Show mobile menu button */
-    .mobile-menu-button { display: flex; }
-    #company-name { font-size: 3rem; letter-spacing: 1px; }
-    .main-content-area { width: 90%; }
-    .content-section { padding: 25px 30px; }
-    .content-section h2 { font-size: 1.6rem; }
-    .content-section p { font-size: 1rem; }
-}
-
-@media (max-width: 480px) {
-    #company-name { font-size: 2.5rem; padding: 10px; }
-    .content-section { padding: 20px; }
+@media (max-width: 767px) { /* Mobile and Tablet */
+    .mobile-menu-button { display: flex; } /* Show hamburger */
+    #company-name { font-size: 2.8rem; letter-spacing: 1px; line-height: 1.2; } /* Adjusted size for wrapping */
+    .main-content-area { width: 90%; padding-top: calc(var(--header-height) + 40px); gap: 40px; }
+    .content-section { padding: 25px 20px; }
     .content-section h2 { font-size: 1.5rem; }
-    .content-section p { font-size: 0.9rem; }
-    .nav-button { width: 40px; height: 40px; font-size: 0.9rem; top: 20px; }
+    .content-section p { font-size: 0.95rem; }
+    .main-header { height: 60px; padding: 0 20px; } /* Smaller header */
+    .header-logo { font-size: 1.3rem; }
+    .nav-button { width: 40px; height: 40px; font-size: 0.9rem; top: 10px; } /* Align with smaller header */
     .back-button { left: 20px; }
     .mobile-menu-button { right: 20px; }
+}
+
+@media (max-width: 480px) { /* Specific small mobile */
+    #company-name { font-size: 2.4rem; padding: 10px; letter-spacing: 0.5px;}
+    /* Force line break if still needed - USE WITH CAUTION */
+    /* #company-name::after { content: '\A'; white-space: pre; } */
+    .content-section { padding: 20px 15px; }
+    .content-section h2 { font-size: 1.4rem; }
+    .content-section p { font-size: 0.9rem; }
     .mobile-menu { width: 260px; right: -260px; }
-    .close-menu-button { top: 20px; right: 20px; }
 }
