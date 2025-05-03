@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeneScape Technologies - Vision</title> <!-- Updated Title -->
+    <title>GeneScape Technologies - Vision</title>
 
-    <!-- Font Awesome (for back button icon) -->
+    <!-- Font Awesome (for icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Main Stylesheet -->
@@ -20,37 +20,40 @@
 
     <!-- Entrance Screen -->
     <section id="entrance-screen">
+        <!-- Static Background for Entrance -->
         <div class="background-container">
-            <div class="background-image"></div>
+            <div class="background-image" id="entrance-background-image"></div> <!-- Specific ID for entrance BG -->
         </div>
         <div class="animation-overlay">
             <div id="title-container">
                  <h1 id="company-name" aria-label="GeneScape Technologies">
                      <!-- Text content added dynamically by JS -->
                  </h1>
+                 <!-- "Enter" prompt added via CSS -->
             </div>
         </div>
     </section>
 
     <!-- Main Content Area -->
-    <main id="main-content" style="display: none;">
-         <!-- Background Image for this section -->
+    <main id="main-content" style="display: none;"> <!-- Starts hidden -->
+         <!-- Static Background for Main Content (Same Image) -->
          <div class="background-container">
-            <div class="background-image"></div>
+            <div class="background-image" id="main-background-image"></div> <!-- Specific ID for main BG -->
          </div>
 
         <!-- Back Button -->
-        <button id="back-button" class="back-button" aria-label="Go back to entrance">
-            <i class="fas fa-arrow-left"></i> <!-- Back Arrow Icon -->
+        <button id="back-button" class="nav-button back-button" aria-label="Go back to entrance">
+            <i class="fas fa-arrow-left"></i>
         </button>
-        
+
         <!-- Mobile Menu Button (Hidden on Desktop) -->
-        <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Toggle mobile menu">
-            <i class="fas fa-bars"></i>
+        <button id="mobile-menu-button" class="nav-button mobile-menu-button" aria-label="Toggle mobile menu">
+            <i class="fas fa-bars"></i> <!-- Initial icon -->
         </button>
-        
+
         <!-- Mobile Menu Panel -->
         <nav class="mobile-menu">
+            <button class="close-menu-button" aria-label="Close menu">×</button>
             <ul class="mobile-nav-links">
                 <li><a href="#coming-soon">Home</a></li>
                 <li><a href="#mission">Our Mission</a></li>
@@ -58,6 +61,8 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
+        <!-- Overlay for closing menu when clicking outside -->
+        <div class="mobile-menu-overlay"></div>
 
         <!-- Content Sections Wrapper -->
         <div class="main-content-area">
@@ -79,6 +84,13 @@
                  <div class="section-content">
                     <h2>The Team</h2>
                     <p>Founded by leading experts in bioinformatics, RNA biology, and data science. Full team details coming soon.</p>
+                 </div>
+            </section>
+
+            <section id="contact" class="content-section">
+                 <div class="section-content">
+                    <h2>Contact</h2>
+                    <p>Inquiries can be directed to [email protected] (Replace with actual email or form later).</p>
                  </div>
             </section>
         </div>

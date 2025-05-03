@@ -1,4 +1,17 @@
-# Inspection Script and Report
-inspect_project.py
+# Python virtual environment
+genescapetech_website_env/
+__pycache__/
+
+# Inspection report
 project_inspection_report.txt
-genescapetech_website_env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Tooling specific (example)
+.qodo/
+.vscode/
+
+# Node modules (if you ever use npm)
+node_modules/

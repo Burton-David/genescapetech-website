@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     gsap.registerPlugin(ScrollToPlugin, TextPlugin);
-    console.log("GeneScape Website Initializing (Hyperion Pass)...");
+    console.log("GeneScape Website Initializing (Award Pass)...");
 
     // --- Selectors ---
     const entranceScreen = document.getElementById('entrance-screen');
@@ -10,20 +10,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const companyNameElement = document.getElementById('company-name');
     const backButton = document.getElementById('back-button');
     const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+    const closeMenuBtn = document.querySelector('.close-menu-button');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-nav-links a');
+    const backgroundImages = document.querySelectorAll('.background-image'); // For parallax
+    const body = document.body; // For toggling menu class
 
     // --- Configuration ---
     const companyNameText = "GeneScape Technologies";
-    const particleCount = 80;
+    const particleCount = 70; // Slightly fewer
     const initialTitleColor = getComputedStyle(document.documentElement).getPropertyValue('--color-title-initial').trim() || '#C9AB7C';
+    const glitchColors = ['#D91F1C', '#C9AB7C', '#FFFFFF', '#1D1D1D', '#777']; // Palette for glitch
 
     let entranceTimeline;
+    let titleSpans = null; // Store split title spans
 
     // --- Utility Functions ---
     function random(min, max) { return Math.random() * (max - min) + min; }
     const entranceColors = ['#D91F1C', '#C9AB7C', '#FFFFFF', '#1D1D1D', '#E6C38C', '#BB9671'];
 
-    function splitTextIntoSpans(selector) {
-        const element = document.querySelector(selector);
+    function splitTextIntoSpans(element) {
         if (!element) return null;
         const text = element.textContent.trim();
         element.innerHTML = '';
@@ -33,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             span.textContent = char;
             span.style.display = 'inline-block';
             span.style.position = 'relative';
-            if (char === ' ') span.style.width = '0.25em';
+            span.style.minWidth = (char === ' ') ? '0.25em' : 'auto'; // Ensure space has width
             element.appendChild(span);
             spans.push(span);
         });
@@ -42,203 +49,158 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Particle Text Animation ---
     function createParticleText(onCompleteCallback) {
-        companyNameElement.innerHTML = ''; // Clear name initially
+        companyNameElement.innerHTML = '';
         const particles = [];
-
-        // Create particles off-screen or randomly positioned
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('span');
             particle.classList.add('particle');
-            // Use random characters initially, maybe from name or abstract symbols
-            particle.textContent = companyNameText[Math.floor(random(0, companyNameText.length))]; // Or symbols like '*', '#', etc.
-            companyNameElement.appendChild(particle); // Add to H1 to inherit styles later
-
+            particle.textContent = companyNameText[Math.floor(random(0, companyNameText.length))];
+            companyNameElement.appendChild(particle);
             gsap.set(particle, {
                 position: 'absolute', top: '50%', left: '50%', xPercent: -50, yPercent: -50,
                 color: entranceColors[Math.floor(random(0, entranceColors.length))],
                 fontSize: `${random(10, 20)}px`,
-                x: random(-window.innerWidth * 0.7, window.innerWidth * 0.7), // Wider initial spread
+                x: random(-window.innerWidth * 0.7, window.innerWidth * 0.7),
                 y: random(-window.innerHeight * 0.7, window.innerHeight * 0.7),
-                opacity: 0,
-                zIndex: 5 // Keep particles behind final text potentially
+                opacity: 0, zIndex: 5
             });
             particles.push(particle);
         }
 
-        // Create hidden target letters purely for position calculation
+        // Create hidden target letters for positioning
         const targetLetters = [];
+        const tempContainer = document.createElement('div'); // Use temp container
+        tempContainer.style.visibility = 'hidden';
+        tempContainer.style.position = 'absolute';
+        tempContainer.style.fontFamily = getComputedStyle(companyNameElement).fontFamily;
+        tempContainer.style.fontSize = getComputedStyle(companyNameElement).fontSize;
+        tempContainer.style.fontWeight = getComputedStyle(companyNameElement).fontWeight;
+        tempContainer.style.letterSpacing = getComputedStyle(companyNameElement).letterSpacing;
+        document.body.appendChild(tempContainer); // Add to body for measurement
+
         companyNameText.split('').forEach((char) => {
             const letter = document.createElement('span');
             letter.textContent = char === ' ' ? '\u00A0' : char;
-            letter.style.position = 'relative'; letter.style.display = 'inline-block';
-            letter.style.visibility = 'hidden'; // Keep hidden
-            // Apply final font style for accurate measurement
-            letter.style.fontFamily = getComputedStyle(companyNameElement).fontFamily;
-            letter.style.fontSize = getComputedStyle(companyNameElement).fontSize;
-            letter.style.fontWeight = getComputedStyle(companyNameElement).fontWeight;
-            letter.style.letterSpacing = getComputedStyle(companyNameElement).letterSpacing;
-             letter.style.color = 'transparent';
-            companyNameElement.appendChild(letter);
+            letter.style.display = 'inline-block';
+            tempContainer.appendChild(letter);
             targetLetters.push(letter);
         });
 
-
-        // Calculate positions after rendering
-        requestAnimationFrame(() => {
-            const letterPositions = targetLetters.map(letter => {
-                 const rect = letter.getBoundingClientRect();
-                 const parentRect = companyNameElement.getBoundingClientRect();
-                 // Calculate position relative to the parent's center for absolute positioning
-                 return {
-                     x: rect.left - parentRect.left + rect.width / 2 - companyNameElement.offsetWidth / 2,
-                     y: rect.top - parentRect.top + rect.height / 2 - companyNameElement.offsetHeight / 2
-                 };
-            });
-             // Remove calculation helpers immediately
-            targetLetters.forEach(letter => letter.remove());
-
-            // Start animation timeline
-            const tl = gsap.timeline({
-                delay: 0.2,
-                onComplete: onCompleteCallback // Callback when animation finishes
-            });
-
-            particles.forEach((particle, i) => {
-                const targetIndex = i % companyNameText.length;
-                const targetPos = letterPositions[targetIndex];
-
-                // Animate particles towards their target positions
-                tl.to(particle, {
-                    x: targetPos.x + random(-8, 8),
-                    y: targetPos.y + random(-8, 8),
-                    opacity: random(0.6, 1),
-                    duration: random(1.2, 2.2),
-                    ease: "power3.inOut",
-                }, random(0, 0.3)); // Stagger start times
-
-                // Morph particles into the final letters
-                // This tween starts overlapping the movement tween
-                tl.to(particle, {
-                    fontSize: getComputedStyle(companyNameElement).fontSize, // Ensure final size match
-                    fontWeight: getComputedStyle(companyNameElement).fontWeight,
-                    fontFamily: getComputedStyle(companyNameElement).fontFamily,
-                    letterSpacing: getComputedStyle(companyNameElement).letterSpacing,
-                    textContent: companyNameText[targetIndex], // Set correct character
-                    color: initialTitleColor, // Set final clean text color
-                    // Maybe fade out particles that aren't part of the final text?
-                    // Or just let them form the letters
-                    duration: 0.5,
-                    ease: "power1.inOut"
-                }, "-=0.7"); // Overlap significantly
-            });
-
-             // Optional: Add a final step to ensure all particles form the exact text
-             tl.call(() => {
-                 companyNameElement.innerHTML = ''; // Clear particles
-                 splitTextIntoSpans('#company-name'); // Recreate text with final spans cleanly
-                 gsap.set('#company-name span', { color: initialTitleColor, opacity: 1 }); // Ensure final state
-             }, [], ">"); // Run after all particle animations
-
-
-            entranceTimeline.add(tl); // Add to main entrance timeline if needed
+        // Calculate positions
+        const letterPositions = targetLetters.map(letter => {
+            const rect = letter.getBoundingClientRect();
+            // Calculate position relative to where the final H1 will be (center screen approx)
+            // This requires knowing the final H1's position, let's calculate relative to window center
+            const h1Rect = companyNameElement.getBoundingClientRect(); // Get expected H1 pos
+            return {
+                x: rect.left - window.innerWidth/2 + rect.width/2,
+                y: rect.top - window.innerHeight/2 + rect.height/2
+            };
         });
+        document.body.removeChild(tempContainer); // Clean up temp container
+
+        // Animation
+        const tl = gsap.timeline({ delay: 0.3, onComplete: onCompleteCallback });
+        particles.forEach((particle, i) => {
+            const targetIndex = i % companyNameText.length;
+            const targetPos = letterPositions[targetIndex];
+            tl.to(particle, {
+                x: targetPos.x + random(-5, 5), y: targetPos.y + random(-5, 5),
+                opacity: random(0.7, 1), duration: random(1.3, 2.3), ease: "power3.inOut",
+            }, random(0, 0.35));
+
+            tl.to(particle, {
+                // Morph visually towards final state
+                fontSize: getComputedStyle(companyNameElement).fontSize,
+                fontWeight: getComputedStyle(companyNameElement).fontWeight,
+                fontFamily: getComputedStyle(companyNameElement).fontFamily,
+                letterSpacing: getComputedStyle(companyNameElement).letterSpacing,
+                textContent: companyNameText[targetIndex],
+                color: initialTitleColor,
+                duration: 0.6, ease: "power1.inOut"
+            }, "-=0.8");
+        });
+
+        // Final clean-up: Remove particles, set final text using spans
+        tl.call(() => {
+            companyNameElement.innerHTML = ''; // Clear particles
+            titleSpans = splitTextIntoSpans(companyNameElement); // Create final spans and STORE them
+            gsap.set(titleSpans, { color: initialTitleColor, opacity: 1 }); // Ensure final clean state
+        }, [], ">-=0.1"); // Run slightly before timeline ends
+
+        if (entranceTimeline) entranceTimeline.add(tl);
     }
 
-    // --- REMOVED Canvas Animation Code ---
 
     // --- Glitch Transition Logic ---
     function createGlitchTransition() {
         console.log("Starting glitch transition...");
-        if (titleContainer) titleContainer.style.pointerEvents = 'none'; // Disable click during transition
-        if (backButton) backButton.style.pointerEvents = 'none'; // Disable back button too
-
-        const letters = splitTextIntoSpans('#company-name'); // Ensure text is split
-        if (!letters) { transitionToMainContent_Fallback(); return; }
+        if (!titleSpans) { // Check if titleSpans were created
+             console.error("Title spans not ready for glitch effect.");
+             titleSpans = splitTextIntoSpans(companyNameElement); // Try splitting now
+             if (!titleSpans) {
+                  transitionToMainContent_Fallback(); // Use fallback if still fails
+                  return;
+             }
+        }
+        if (titleContainer) titleContainer.style.pointerEvents = 'none';
+        if (backButton) backButton.style.pointerEvents = 'none';
 
         const glitchTl = gsap.timeline({
             onComplete: () => {
-                // Hide entrance screen via class for CSS transition
                 entranceScreen.classList.add('hidden');
-                // Show main content via class for CSS transition
                 mainContent.classList.add('visible');
-
-                 // Re-enable title click *if* we intend to allow glitching again without reload
-                 // if (titleContainer) titleContainer.style.pointerEvents = 'auto';
+                // No need to manage video play state
             }
         });
 
         // 1. Initial quick flash/distortion
-        glitchTl.to(entranceScreen, { // Flash effect on screen
-                duration: 0.04, yoyo: true, repeat: 2,
-                filter: 'brightness(1.3) contrast(1.1)' // Subtle flash
-            })
-            .to(letters, { // Scramble letters
-                duration: 0.04, opacity: 0.7, x: () => random(-5, 5), y: () => random(-3, 3),
-                filter: 'blur(0.5px)', stagger: { amount: 0.2, from: "random" }, yoyo: true, repeat: 1
+        glitchTl.to(entranceScreen, { duration: 0.05, filter: 'brightness(1.2)', yoyo: true, repeat: 2 })
+            .to(titleSpans, { // Use stored spans
+                duration: 0.05, opacity: 0.8, x: () => random(-6, 6), y: () => random(-4, 4),
+                filter: 'blur(0.5px)', stagger: { amount: 0.25, from: "random" }, yoyo: true, repeat: 1
             }, "<");
 
         // 2. More intense glitching
-        glitchTl.to(letters, {
-                duration: 0.35, x: () => random(-25, 25), y: () => random(-15, 15),
-                rotation: () => random(-10, 10),
-                color: () => ['#D91F1C', '#C9AB7C', '#FFFFFF', '#1D1D1D', '#A0A0A0'][Math.floor(random(0, 5))],
-                opacity: () => random(0.3, 0.9), stagger: { amount: 0.4, from: "random" }
+        glitchTl.to(titleSpans, {
+                duration: 0.4, x: () => random(-20, 20), y: () => random(-12, 12),
+                rotation: () => random(-8, 8),
+                color: () => glitchColors[Math.floor(random(0, glitchColors.length))],
+                opacity: () => random(0.4, 0.9), stagger: { amount: 0.45, from: "random" }
             }, "+=0.05");
 
-        // 3. Final disintegration (letters fade/fall) AND Scroll Trigger
-        glitchTl.to(letters, {
-                duration: 0.45, opacity: 0, y: () => random(40, 100), filter: 'blur(4px)',
-                stagger: { amount: 0.35, from: "center" }, ease: "power1.in"
+        // 3. Final disintegration and Scroll Trigger
+        glitchTl.to(titleSpans, {
+                duration: 0.5, opacity: 0, y: () => random(50, 120), filter: 'blur(5px)',
+                stagger: { amount: 0.4, from: "center" }, ease: "power1.in"
             }, "-=0.15")
-             // Instead of fading screen with GSAP, let CSS handle it via class removal later
-             // Start scroll while letters are disintegrating
-             .to(window, {
-                 duration: 1.1,
-                 scrollTo: { y: 0 }, // Scroll to top of #main-content (which starts at y=0)
-                 ease: "power2.inOut"
-             }, "<+=0.1"); // Start scroll slightly after letters start fading
-
+             .to(window, { // Scroll starts as letters disintegrate
+                 duration: 1.1, scrollTo: { y: 0 }, ease: "power2.inOut"
+             }, "<");
     }
 
      // --- Back Button Transition ---
      function transitionToEntranceScreen() {
          console.log("Transitioning back to entrance...");
-         if (backButton) backButton.style.pointerEvents = 'none'; // Disable during transition
-         if (titleContainer) titleContainer.style.pointerEvents = 'none'; // Disable title click too
+         if (backButton) backButton.style.pointerEvents = 'none';
+         if (titleContainer) titleContainer.style.pointerEvents = 'none';
+         closeMobileMenu(); // Close menu if open
 
          const backTl = gsap.timeline({
              onComplete: () => {
-                 // Re-enable title click after returning
                  if (titleContainer) titleContainer.style.pointerEvents = 'auto';
-                 // Ensure main video is paused? (Optional)
-                 // if(mainVideo) mainVideo.pause();
              }
          });
 
-         // 1. Scroll window back to top smoothly
-         backTl.to(window, {
-             duration: 0.8,
-             scrollTo: { y: 0 },
-             ease: "power2.inOut"
-         });
+         backTl.to(window, { duration: 0.8, scrollTo: { y: 0 }, ease: "power2.inOut" });
 
-         // 2. Fade out main content (using class) and fade in entrance screen
          backTl.call(() => {
              mainContent.classList.remove('visible');
              entranceScreen.classList.remove('hidden');
-             // Re-run particle text animation for re-entry? Or just ensure title is visible?
-             // Let's just ensure the title is visible and clean.
-             gsap.set('#company-name span', {clearProps: "all"}); // Clear any glitch props
-             companyNameElement.innerHTML = ''; // Clear spans
-             splitTextIntoSpans('#company-name'); // Recreate clean text
-             gsap.set('#company-name span', { color: initialTitleColor, opacity: 1 });
-
-             // No video elements to manage anymore
-
-         }, null, ">-0.4"); // Start fade slightly before scroll finishes
-
+             // Reset title to clean state immediately
+             gsap.set(titleSpans, { clearProps: "all", color: initialTitleColor, opacity: 1 });
+         }, null, ">-0.4");
      }
-
 
      // Fallback transition
      function transitionToMainContent_Fallback() {
@@ -249,117 +211,104 @@ document.addEventListener('DOMContentLoaded', () => {
                  mainContent.classList.add('visible');
              }
          });
-         // Just use the class-based fade + scroll
          fallbackTl.to(window, { duration: 1.0, scrollTo: { y: 0 }, ease: "power2.inOut" }, 0);
      }
 
+    // --- Subtle Parallax Effect ---
+    function setupParallax() {
+        if (backgroundImages.length) {
+            window.addEventListener('mousemove', (e) => {
+                // Reduce effect intensity
+                const moveX = (e.clientX / window.innerWidth - 0.5) * -20; // Max 10px move
+                const moveY = (e.clientY / window.innerHeight - 0.5) * -20; // Max 10px move
+
+                // Apply smooth tween using GSAP
+                gsap.to(backgroundImages, {
+                    duration: 1.8, // Slower, smoother transition
+                    x: moveX,
+                    y: moveY,
+                    ease: 'power1.out' // Smooth easing
+                });
+            });
+        }
+    }
+
+    // --- Mobile Menu Logic ---
+    function openMobileMenu() {
+        body.classList.add('mobile-menu-open');
+        mobileMenuButton.querySelector('i').classList.remove('fa-bars');
+        mobileMenuButton.querySelector('i').classList.add('fa-times');
+        gsap.to(mobileMenu, { right: 0, duration: 0.4, ease: 'power2.out' });
+        gsap.to(mobileMenuOverlay, { opacity: 1, visibility: 'visible', duration: 0.4 });
+        mobileMenuOverlay.style.pointerEvents = 'auto'; // Enable overlay click
+    }
+
+    function closeMobileMenu() {
+        body.classList.remove('mobile-menu-open');
+        mobileMenuButton.querySelector('i').classList.remove('fa-times');
+        mobileMenuButton.querySelector('i').classList.add('fa-bars');
+        gsap.to(mobileMenu, { right: `-${mobileMenu.offsetWidth}px`, duration: 0.4, ease: 'power2.in' });
+        gsap.to(mobileMenuOverlay, { opacity: 0, visibility: 'hidden', duration: 0.4 });
+        mobileMenuOverlay.style.pointerEvents = 'none'; // Disable overlay click
+    }
+
+    function toggleMobileMenu() {
+        if (body.classList.contains('mobile-menu-open')) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    }
 
     // --- Initialization Function ---
     function init() {
         entranceTimeline = gsap.timeline();
         if(titleContainer) titleContainer.style.pointerEvents = 'none'; // Disable clicks initially
 
-        // Run particle animation, enable clicks on completion
-        createParticleText(() => {
+        createParticleText(() => { // Enable click after particles settle
              if (titleContainer) titleContainer.style.pointerEvents = 'auto';
              console.log("Particle text animation complete. Title clickable.");
         });
 
-        // Add subtle parallax effect to background images
-        const backgroundImages = document.querySelectorAll('.background-image');
-        if (backgroundImages.length) {
-            window.addEventListener('mousemove', (e) => {
-                const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-                const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-                backgroundImages.forEach(img => {
-                    gsap.to(img, {
-                        duration: 1.5,
-                        x: moveX,
-                        y: moveY,
-                        ease: 'power1.out'
-                    });
-                });
-            });
-        }
+        setupParallax(); // Initialize parallax effect
 
-        // Ensure main content and navigation buttons are hidden initially
-        gsap.set(mainContent, { display: 'flex', opacity: 0, visibility: 'hidden' }); // Set display flex but keep hidden
+        gsap.set(mainContent, { display: 'flex', opacity: 0, visibility: 'hidden' });
         gsap.set(backButton, { opacity: 0, visibility: 'hidden', pointerEvents: 'none' });
         gsap.set(mobileMenuButton, { opacity: 0, visibility: 'hidden', pointerEvents: 'none' });
-
+        gsap.set(mobileMenuOverlay, { opacity: 0, visibility: 'hidden', pointerEvents: 'none' });
+        gsap.set(mobileMenu, { right: '-300px' }); // Ensure menu starts off-screen
 
         // --- Event Listeners ---
-        if (titleContainer) {
-             titleContainer.addEventListener('click', createGlitchTransition);
-        } else { console.error("Title container not found!"); }
+        if (titleContainer) titleContainer.addEventListener('click', createGlitchTransition);
+        else console.error("Title container not found!");
 
-        if (backButton) {
-            backButton.addEventListener('click', transitionToEntranceScreen);
-        } else { console.error("Back button not found!"); }
-        
-        // Mobile menu functionality
-        if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', toggleMobileMenu);
-        } else { console.error("Mobile menu button not found!"); }
-        
-        // Function to handle mobile menu toggle
-        function toggleMobileMenu() {
-            console.log("Mobile menu clicked");
-            const mainContentArea = document.querySelector('.main-content-area');
-            
-            if (mainContentArea) {
-                mainContentArea.classList.toggle('mobile-menu-open');
-                
-                // Toggle icon between bars and X
-                const icon = mobileMenuButton.querySelector('i');
-                if (icon) {
-                    if (icon.classList.contains('fa-bars')) {
-                        icon.classList.remove('fa-bars');
-                        icon.classList.add('fa-times');
-                    } else {
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                    }
-                }
-            }
-        }
-        
-        // Add click handlers for mobile menu links
-        const mobileMenuLinks = document.querySelectorAll('.mobile-nav-links a');
+        if (backButton) backButton.addEventListener('click', transitionToEntranceScreen);
+        else console.error("Back button not found!");
+
+        if (mobileMenuButton) mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        else console.error("Mobile menu button not found!");
+
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMobileMenu);
+        if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenu); // Close on overlay click
+
+        // Close menu and scroll when clicking a nav link
         mobileMenuLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                // Get the target section id from the href
+                closeMobileMenu(); // Close menu first
                 const targetId = this.getAttribute('href');
                 const targetSection = document.querySelector(targetId);
-                
                 if (targetSection) {
-                    // Close the mobile menu
-                    const mainContentArea = document.querySelector('.main-content-area');
-                    if (mainContentArea && mainContentArea.classList.contains('mobile-menu-open')) {
-                        mainContentArea.classList.remove('mobile-menu-open');
-                        
-                        // Reset menu button icon
-                        const icon = mobileMenuButton.querySelector('i');
-                        if (icon) {
-                            icon.classList.remove('fa-times');
-                            icon.classList.add('fa-bars');
-                        }
-                    }
-                    
-                    // Scroll to the section
                     gsap.to(window, {
                         duration: 0.8,
-                        scrollTo: { y: targetSection, offsetY: 70 },
-                        ease: "power2.inOut"
+                        // Calculate offset dynamically, considering potential fixed headers later
+                        scrollTo: { y: targetSection, offsetY: 80 }, // Add some offset
+                        ease: "power2.inOut",
+                        delay: 0.1 // Slight delay after menu starts closing
                     });
                 }
             });
         });
-
-        // Resize listener (removed canvas logic)
-        // window.addEventListener('resize', onResize); // Keep if needed for other resize logic
 
          console.log("Initialization complete.");
     }
