@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeneScape Technologies - Coming Soon</title>
     <link rel="stylesheet" href="style.css">
-    <!-- We will add GSAP library later -->
+    <!-- Favicon links (optional but recommended) - generate favicons and place them here -->
+    <!-- <link rel="icon" href="/favicon.ico" sizes="any"> -->
+    <!-- <link rel="icon" href="/icon.svg" type="image/svg+xml"> -->
+    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
 </head>
 <body>
 
@@ -13,46 +16,82 @@
     <section id="entrance-screen">
         <div class="background-layer" id="entrance-bg">
             <!-- Static background image will be set via CSS -->
+            <!-- You should have added the image path in style.css -->
         </div>
         <div class="animation-overlay">
-            <!-- Waterfall animation elements might go here or in canvas -->
+            <!-- Waterfall animation elements might go here or in a separate canvas -->
+
+            <!-- Area for the rotating cylinder illusion -->
             <div class="cylinder-mask">
                 <div class="cylinder-content">
-                    <!-- Animated square elements will be generated here -->
+                    <!-- Animated square/rectangle elements mimicking the image's central band will be generated/placed here by JavaScript -->
+                    <!-- Placeholder content (optional for testing): -->
+                    <!-- <div style="width: 2000px; height: 100%; background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red); opacity: 0.5;"></div> -->
                 </div>
             </div>
-            <h1 id="company-name">
-                <!-- Particles for "GeneScape Technologies" will target this -->
+
+            <!-- Company Name - Target for particle animation -->
+            <h1 id="company-name" aria-label="GeneScape Technologies">
+                <!-- Text content might be added dynamically by JS animation, or start empty -->
             </h1>
+
+            <!-- Enter Button - Initially hidden -->
             <button id="enter-button" style="display: none;">Enter</button>
         </div>
     </section>
 
     <!-- Main Content Area (Second Image Background) -->
-    <main id="main-content" style="display: none;">
+    <main id="main-content" style="display: none;"> <!-- Initially hidden -->
         <div class="background-layer" id="main-bg">
-            <!-- Static background image will be set via CSS -->
-            <!-- Canvas for genome sequence animation will go here -->
+            <!-- Static background image set via CSS -->
+            <!-- You should have added the image path in style.css -->
+
+            <!-- Canvas for the subtle genome sequence animation -->
             <canvas id="genome-canvas"></canvas>
         </div>
+
+        <!-- Wrapper for the actual content, styled with a semi-transparent background -->
         <div class="content-wrapper">
             <section id="coming-soon">
                 <h2>Coming Soon</h2>
-                <p>GeneScape Technologies is preparing for launch. Stay tuned.</p>
+                <p>GeneScape Technologies is preparing for launch. Stay tuned for updates on our groundbreaking work in RNA editing and analysis.</p>
+                <!-- Maybe add a newsletter signup form placeholder later? -->
             </section>
-            <section id="mission" style="/* display: none; initially */">
-                <!-- Placeholder for Mission -->
+
+            <!-- Structure for future content sections -->
+            <section id="mission" style="/* display: none; Initially hidden until content is ready */">
+                <h2>Our Mission</h2>
+                <p><!-- Placeholder --></p>
             </section>
-            <section id="team" style="/* display: none; initially */">
-                <!-- Placeholder for Team -->
+
+            <section id="team" style="/* display: none; Initially hidden until content is ready */">
+                <h2>The Team</h2>
+                 <p><!-- Placeholder --></p>
+                 <!-- Team member profiles could go here -->
             </section>
         </div>
+
+        <!-- Optional Footer Area -->
         <footer>
-            <!-- Optional Footer -->
+            <p>© <span id="copyright-year"></span> GeneScape Technologies. All rights reserved.</p>
+            <!-- Add any other footer links or info here -->
         </footer>
     </main>
 
+    <!-- ==== SCRIPTS ==== -->
+
+    <!-- GSAP Core Library (Make sure this is included) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <!-- Optional: If we need scroll-based animations later -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script> -->
+
+    <!-- Your Custom JavaScript File -->
     <script src="script.js"></script>
-    <!-- We will add GSAP script source later -->
+
+    <!-- Inline script for dynamic year (optional) -->
+    <script>
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+
 </body>
 </html>
