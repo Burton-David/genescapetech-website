@@ -15,3 +15,7 @@ Thumbs.db
 
 # Node modules (if you ever use npm)
 node_modules/
+
+# project snapshots
+inspect_project.py
+project_inspection_report.txt
