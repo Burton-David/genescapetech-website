@@ -1,0 +1,221 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Define CSS Variables for Colors (Sampled from images - adjust as needed) */
+:root {
+    /* Entrance Screen Palette (Image 1) */
+    --color-entrance-dark: #3a0a3e; /* Deep magenta/purple */
+    --color-entrance-mid: #e88c0c;  /* Orange/Yellow */
+    --color-entrance-bright: #fef200;/* Bright Yellow */
+    --color-entrance-accent: #1fae9f; /* Teal */
+    --color-entrance-bg-fallback: #1a082d;
+
+    /* Main Content Palette (Image 2) */
+    --color-main-dark: #0b3d4a;   /* Dark Teal/Blue */
+    --color-main-mid: #9e2a3f;    /* Muted Red */
+    --color-main-light: #f0f0f0;  /* Off-white/Light Grey (for text maybe) */
+    --color-main-accent: #d4a05d; /* Gold/Yellow */
+    --color-main-bg-fallback: #e8f0f2;
+    --color-text-light: #ffffff;
+    --color-text-dark: #333333;
+}
+
+html {
+    scroll-behavior: smooth; /* Enable smooth scrolling */
+}
+
+body {
+    font-family: sans-serif; /* Basic fallback font */
+    line-height: 1.6;
+    background-color: var(--color-entrance-bg-fallback); /* Fallback */
+    color: var(--color-text-light);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* --- Section Styling --- */
+
+#entrance-screen, #main-content {
+    min-height: 100vh; /* Ensure sections take at least full viewport height */
+    width: 100%;
+    position: relative; /* Needed for absolute positioning of children */
+    overflow: hidden; /* Hide overflowing animated elements */
+    display: flex; /* Using flex for potential centering */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Initially hide main content */
+#main-content {
+   display: none; /* Will be shown via JS after entrance */
+   background-color: var(--color-main-bg-fallback);
+   flex-direction: column; /* Stack content vertically */
+}
+
+/* Background Image Layers */
+.background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Behind content and animations */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#entrance-bg {
+    /* Add URL to your first uploaded image */
+    background-image: url('image1.jpg');
+}
+
+#main-bg {
+     /* Add URL to your second uploaded image */
+    background-image: url('image2.jpg');
+    /* background-attachment: fixed; /* Creates parallax effect, test performance */
+}
+
+/* --- Entrance Screen Specific --- */
+
+.animation-overlay {
+    position: relative; /* To position elements within it */
+    z-index: 10; /* Above background, below potential modals */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px; /* Add some padding */
+     /* Add a subtle overlay maybe? Test this */
+    /* background-color: rgba(0, 0, 0, 0.1); */
+}
+
+#company-name {
+    font-size: 2rem; /* Start with mobile size */
+    color: var(--color-entrance-bright);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-align: center;
+    /* Add more styling as needed */
+}
+
+#enter-button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 1rem;
+    background-color: var(--color-entrance-mid);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 11; /* Ensure it's clickable */
+}
+
+#enter-button:hover {
+    background-color: var(--color-entrance-accent);
+}
+
+.cylinder-mask {
+    position: absolute;
+    top: 40%; /* Adjust vertical position */
+    left: 0;
+    width: 100%;
+    height: 20%; /* Adjust height of the band */
+    overflow: hidden; /* The crucial part */
+    z-index: 5; /* Between background and text */
+    pointer-events: none; /* Allow clicks to pass through */
+    /* Add perspective here later for desktop? */
+}
+
+.cylinder-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    /* Width will be very large, set by JS or many repeating elements */
+    /* display: flex; */ /* Useful for aligning generated squares */
+    /* Background/elements mimicking the image center will go here */
+    background-color: rgba(0, 0, 0, 0.2); /* Temporary placeholder */
+}
+
+/* --- Main Content Specific --- */
+
+#genome-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* Above background, below content wrapper */
+    pointer-events: none; /* Allow interaction with content below */
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 3; /* Above canvas */
+    width: 90%;
+    max-width: 900px; /* Limit max width on desktop */
+    margin: 50px auto; /* Centering and spacing */
+    padding: 30px;
+    background-color: rgba(11, 61, 74, 0.8); /* Semi-transparent dark background (from main palette) */
+    border-radius: 8px;
+    color: var(--color-text-light);
+}
+
+.content-wrapper h2 {
+    color: var(--color-main-accent);
+    margin-bottom: 15px;
+}
+
+footer {
+   /* Basic footer styles */
+   padding: 20px;
+   text-align: center;
+   margin-top: 40px;
+   color: var(--color-main-light);
+   font-size: 0.9rem;
+}
+
+
+/* --- Responsive Adjustments --- */
+
+/* Tablet */
+@media (min-width: 768px) {
+    #company-name {
+        font-size: 3rem;
+    }
+
+    .content-wrapper {
+        width: 80%;
+        padding: 40px;
+    }
+
+    .cylinder-mask {
+        height: 25%; /* Make band larger */
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    #company-name {
+        font-size: 4rem;
+    }
+
+     .content-wrapper {
+        width: 70%;
+        padding: 50px;
+    }
+
+    .cylinder-mask {
+        height: 30%;
+        /* Consider adding perspective here */
+        /* perspective: 1000px; */
+    }
+
+    /* Enhance animations if needed */
+}
