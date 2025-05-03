@@ -70,12 +70,12 @@ body {
 
 #entrance-bg {
     /* Add URL to your first uploaded image */
-    background-image: url('image1.jpg');
+    background-image: url('image1.png');
 }
 
 #main-bg {
      /* Add URL to your second uploaded image */
-    background-image: url('image2.jpg');
+    background-image: url('image2.png');
     /* background-attachment: fixed; /* Creates parallax effect, test performance */
 }
 
