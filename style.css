@@ -1,28 +1,10 @@
-/* Basic Reset */
+/* --- Global Settings & Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-/* Define CSS Variables for Colors */
-:root {
-    /* Entrance Screen Palette (Adjust based on video/preference) */
-    --color-entrance-dark: #1a082d;
-    --color-entrance-mid: #e88c0c;
-    --color-entrance-bright: #fef200;
-    --color-entrance-accent: #1fae9f;
-    --color-entrance-text: #ffffff; /* White text for entrance */
-    --color-entrance-hover: #00ffff; /* Cyan/bright color for hover */
-
-    /* Main Content Palette */
-    --color-main-dark: #0b3d4a;
-    --color-main-mid: #9e2a3f;
-    --color-main-light: #f0f0f0;
-    --color-main-accent: #d4a05d;
-    --color-main-bg-fallback: #e8f0f2;
-    --color-text-light: #ffffff;
-    --color-text-dark: #333333;
 }
 
 html {
@@ -30,152 +12,174 @@ html {
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nicer font stack */
+    font-family: 'Poppins', sans-serif; /* Use Poppins */
     line-height: 1.6;
-    background-color: var(--color-entrance-dark); /* Fallback */
-    color: var(--color-text-light);
+    background-color: #000; /* Dark fallback */
+    color: #eee; /* Light default text */
     overflow-x: hidden;
 }
 
-/* --- Section Styling --- */
-#entrance-screen, #main-content {
-    min-height: 100vh;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* --- CSS Variables --- */
+:root {
+    --color-primary: #00ffff; /* Cyan for hover/accent */
+    --color-secondary-accent: #ff00ff; /* Magenta accent */
+    --color-dark-text: #222222; /* Dark grey for title */
+    --color-light-text: #f0f0f0; /* Light text for main content */
+    --color-main-bg-overlay: rgba(15, 25, 40, 0.7); /* Dark blueish overlay for content cards */
+    --blur-intensity: 8px; /* Blur effect for cards */
 }
 
-#main-content {
-   display: none;
-   background-color: var(--color-main-bg-fallback);
-   flex-direction: column;
+/* --- Entrance Screen --- */
+#entrance-screen {
+    min-height: 100vh; width: 100%; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
 }
 
-/* --- Video Background Styling --- */
 .video-background-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 1;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    overflow: hidden; z-index: 1;
 }
 
 .video-background-container video {
-    min-width: 100%;
-    min-height: 100%;
-    width: 100%; /* Ensure width fills container */
-    height: 100%; /* Ensure height fills container */
-    object-fit: cover; /* Cover area, maintain aspect ratio */
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* filter: brightness(0.9); /* Optional adjustment */
+    min-width: 100%; min-height: 100%; width: 100%; height: 100%;
+    object-fit: cover; position: absolute; top: 0; left: 0;
 }
 
-/* --- Entrance Screen Specific --- */
 .animation-overlay {
-    position: relative;
-    z-index: 10; /* Above video */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    /* background: rgba(0, 0, 0, 0.1); /* Optional dark overlay */
+    position: relative; z-index: 10; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; width: 100%; height: 100%; padding: 20px;
 }
 
 #title-container {
-    position: relative; /* For positioning the pseudo-element */
-    cursor: pointer; /* Indicate it's clickable */
-    text-align: center;
+    position: relative; cursor: pointer; text-align: center;
 }
 
 #company-name {
-    font-size: 2.5rem; /* Start with mobile size */
-    color: var(--color-entrance-text);
-    font-weight: 600; /* Slightly bolder */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
-    margin: 0; /* Remove default margin */
-    padding: 10px 20px; /* Add padding for hover effect */
-    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition */
-    position: relative; /* Needed for pseudo-elements if used later */
-    z-index: 1; /* Ensure text is above potential background elements */
+    font-size: 3rem; /* Base size */
+    font-weight: 600;
+    color: var(--color-dark-text); /* Changed to dark grey */
+    /* Subtle white glow/shadow to lift off the video */
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.7),
+        0 0 10px rgba(255, 255, 255, 0.5),
+        1px 1px 2px rgba(0, 0, 0, 0.3);
+    margin: 0; padding: 15px 30px; /* More padding */
+    transition: color 0.3s ease, text-shadow 0.4s ease;
+    position: relative; z-index: 1;
 }
 
-/* Integrated "Enter" Prompt on Hover */
-#title-container::after {
-    content: 'Enter';
-    position: absolute;
-    bottom: -5px; /* Position below the title */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.9rem;
-    font-weight: normal;
-    color: var(--color-entrance-hover);
+#title-container::after { /* "Enter" prompt */
+    content: 'Enter'; position: absolute; bottom: 0px; left: 50%;
+    transform: translateX(-50%); font-size: 1rem; font-weight: 400;
+    color: var(--color-primary);
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    opacity: 0; /* Hidden by default */
-    transition: opacity 0.3s ease, bottom 0.3s ease;
-    pointer-events: none; /* Don't interfere with clicks */
+    opacity: 0; transition: opacity 0.3s ease, bottom 0.3s ease;
+    pointer-events: none;
 }
 
 #title-container:hover #company-name {
-    color: var(--color-entrance-hover); /* Change title color on hover */
-    text-shadow: 1px 1px 4px rgba(0, 255, 255, 0.5); /* Change shadow */
+    color: var(--color-primary); /* Bright cyan on hover */
+    text-shadow: /* Brighter cyan glow */
+        0 0 8px rgba(0, 255, 255, 0.9),
+        0 0 15px rgba(0, 255, 255, 0.7),
+        0 0 25px rgba(0, 255, 255, 0.5),
+        1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 #title-container:hover::after {
-    opacity: 1; /* Show "Enter" on hover */
-    bottom: -15px; /* Move it down slightly */
+    opacity: 1; bottom: -20px;
 }
 
-
-/* Hide the actual button - interaction is via title-container */
-#enter-button {
-    display: none !important;
+/* --- Main Content Area --- */
+#main-content {
+   display: none; /* Shown by JS */
+   min-height: 100vh; width: 100%; position: relative; overflow: hidden;
+   padding: 80px 0; /* Add padding top/bottom */
+   background-color: #050a10; /* Dark fallback if image fails */
 }
 
-
-/* --- Main Content Specific --- */
-#genome-canvas {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 2; pointer-events: none;
-}
-
-#main-bg { /* Rule for the second background image */
+#main-bg { /* Static background image for this section */
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     z-index: 1; background-size: cover; background-position: center center;
     background-repeat: no-repeat;
-    background-image: url('images/image2.png'); /* Make sure this path is correct */
+    background-image: url('images/image2.png'); /* Ensure path is correct */
+    background-attachment: fixed; /* Parallax effect */
+    filter: brightness(0.7); /* Slightly darken bg image */
 }
 
-.content-wrapper {
-    position: relative; z-index: 3; /* Above canvas and main-bg */
-    width: 90%; max-width: 900px; margin: 50px auto; padding: 30px;
-    background-color: rgba(11, 61, 74, 0.85); /* Slightly more opaque */
-    border-radius: 8px; color: var(--color-text-light);
+#genome-canvas { /* Subtle animation layer */
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 2; pointer-events: none;
+    opacity: 0.3; /* Make it more subtle */
 }
-.content-wrapper h2 { color: var(--color-main-accent); margin-bottom: 15px; }
-footer { padding: 20px; text-align: center; margin-top: 40px; color: var(--color-main-light); font-size: 0.9rem; }
+
+.main-content-area { /* Container for sections */
+    position: relative;
+    z-index: 3; /* Above background and canvas */
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid; /* Use grid for layout */
+    gap: 40px; /* Space between sections */
+}
+
+.content-section {
+    /* Styling for individual content cards */
+    background-color: var(--color-main-bg-overlay);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    overflow: hidden; /* Needed for backdrop-filter */
+
+    /* Glassmorphism Effect */
+    -webkit-backdrop-filter: blur(var(--blur-intensity));
+    backdrop-filter: blur(var(--blur-intensity));
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.section-content {
+    padding: 30px 40px;
+}
+
+.content-section h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-primary); /* Use primary accent color */
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.3); /* Accent border */
+    display: inline-block; /* Border only under text */
+}
+
+.content-section p {
+    font-size: 1rem;
+    color: var(--color-light-text);
+    line-height: 1.7;
+}
+
+/* --- Footer --- */
+.main-footer {
+    position: relative; /* Needs position to be above fixed bg */
+    z-index: 5; /* Above background */
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: 60px;
+    color: rgba(255, 255, 255, 0.6); /* Muted white */
+    font-size: 0.9rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); /* Fade in background */
+}
 
 /* --- Responsive Adjustments --- */
 @media (min-width: 768px) {
-    #company-name { font-size: 3.5rem; }
-    .content-wrapper { width: 80%; padding: 40px; }
-}
-@media (min-width: 1024px) {
     #company-name { font-size: 4.5rem; }
-    .content-wrapper { width: 70%; padding: 50px; }
+    .main-content-area { width: 85%; gap: 50px; }
+    .content-section h2 { font-size: 2rem; }
+    .content-section p { font-size: 1.1rem; }
 }
 
-/* --- Glitch Animation Placeholders (if needed) --- */
-/* We might add temporary classes via JS during the glitch */
-.glitch-active {
-    /* Styles applied during glitch */
+@media (min-width: 1024px) {
+    #company-name { font-size: 5.5rem; }
+    .main-content-area { width: 80%; max-width: 1200px; gap: 60px; }
+    /* Optional: 2-column layout for sections on wider screens */
+    /* .main-content-area { grid-template-columns: 1fr 1fr; } */
+    /* #coming-soon { grid-column: 1 / -1; } /* Make first section span full width */
 }

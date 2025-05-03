@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeneScape Technologies - Entering the Future</title> <!-- Updated Title -->
+    <title>GeneScape Technologies - Pioneering RNA Editing</title> <!-- More specific title -->
+
+    <!-- Google Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome (for potential future icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
-    <!-- Favicon links (optional but recommended) -->
+
+    <!-- Favicon links -->
     <!-- <link rel="icon" href="/favicon.ico" sizes="any"> -->
     <!-- <link rel="icon" href="/icon.svg" type="image/svg+xml"> -->
     <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
@@ -14,73 +25,68 @@
 
     <!-- Entrance Screen -->
     <section id="entrance-screen">
-        <!-- Video Background Container -->
         <div class="video-background-container">
             <video id="entranceVideo" autoplay loop muted playsinline poster="images/image1.png">
-                <!-- Video source is in the root directory -->
                 <source src="Intro_video.mp4" type="video/mp4">
-                <!-- Add other formats like webm if available -->
                 <!-- <source src="Intro_video.webm" type="video/webm"> -->
-                Your browser does not support the video tag. (Fallback text)
+                Your browser does not support the video tag.
             </video>
         </div>
-        <!-- End Video Background Container -->
-
-        <!-- Animation Overlay (Text, Button, etc.) -->
         <div class="animation-overlay">
-            <!-- Company Name - Target for particle animation -->
-            <!-- Wrap in a container for easier hover effect handling -->
             <div id="title-container">
                  <h1 id="company-name" aria-label="GeneScape Technologies">
                      <!-- Text content added dynamically by JS -->
                  </h1>
-                 <!-- Enter prompt will be integrated visually via CSS/JS on hover -->
+                 <!-- "Enter" prompt integrated via CSS -->
             </div>
-             <!-- Hidden button, might not be needed if title click works -->
-             <button id="enter-button" style="display: none; opacity: 0; pointer-events: none;">Enter</button>
         </div>
-        <!-- End Animation Overlay -->
     </section>
 
-    <!-- Main Content Area (Second Image Background) -->
-    <main id="main-content" style="display: none;"> <!-- Initially hidden -->
-        <div class="background-layer" id="main-bg">
-            <!-- Static background image set via CSS (image2.png) -->
-            <canvas id="genome-canvas"></canvas>
+    <!-- Main Content Area -->
+    <main id="main-content" style="display: none;">
+        <!-- Static Background for this section -->
+        <div class="background-layer" id="main-bg"></div>
+        <!-- Subtle Canvas Animation Layer -->
+        <canvas id="genome-canvas"></canvas>
+
+        <!-- Content Sections Wrapper -->
+        <div class="main-content-area">
+            <section id="coming-soon" class="content-section">
+                <div class="section-content">
+                    <h2>Illuminating the Future of RNA Therapeutics</h2>
+                    <p>GeneScape Technologies is operating in stealth mode, developing groundbreaking technologies in RNA editing and analysis. Prepare for a new era in precision medicine. Stay tuned.</p>
+                    <!-- Future: Newsletter signup? -->
+                </div>
+            </section>
+
+            <section id="mission" class="content-section">
+                <div class="section-content">
+                    <h2>Our Mission</h2>
+                    <p>To decode and recode RNA, creating transformative therapies for intractable diseases and unlocking the full potential of genomic medicine.</p>
+                </div>
+            </section>
+
+            <section id="team" class="content-section">
+                 <div class="section-content">
+                    <h2>The Team</h2>
+                    <p>Founded by leading experts in bioinformatics, RNA biology, and data science. Full team details coming soon.</p>
+                    <!-- Future: Team member profiles -->
+                 </div>
+            </section>
         </div>
-        <div class="content-wrapper">
-            <section id="coming-soon">
-                <h2>Coming Soon</h2>
-                <p>GeneScape Technologies is preparing for launch. Stay tuned for updates on our groundbreaking work in RNA editing and analysis.</p>
-            </section>
-            <section id="mission" style="/* display: none; Initially hidden until content is ready */">
-                <h2>Our Mission</h2>
-                <p><!-- Placeholder --></p>
-            </section>
-            <section id="team" style="/* display: none; Initially hidden until content is ready */">
-                <h2>The Team</h2>
-                 <p><!-- Placeholder --></p>
-            </section>
-        </div>
-        <footer>
+
+        <!-- Footer -->
+        <footer class="main-footer">
             <p>© <span id="copyright-year"></span> GeneScape Technologies. All rights reserved.</p>
+            <!-- Future: Social links, contact info? -->
         </footer>
     </main>
 
     <!-- ==== SCRIPTS ==== -->
-
-    <!-- GSAP Core Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <!-- GSAP ScrollToPlugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollToPlugin.min.js"></script>
-    <!-- GSAP TextPlugin (Potentially useful for glitch effect) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js"></script>
-
-
-    <!-- Your Custom JavaScript File -->
     <script src="script.js"></script>
-
-    <!-- Inline script for dynamic year (optional) -->
     <script>
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
     </script>
