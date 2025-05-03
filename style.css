@@ -1,6 +1,17 @@
 /* --- Global Settings & Font Definition --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Michroma&family=Nunito+Sans:wght@400;600;700&family=Outfit:wght@400;600;700&family=Poppins:wght@400;600&family=Raleway:wght@400;600;700&family=Syncopate:wght@400;700&display=swap');
 
+/* Font Face Rule (Verify Paths!) */
+@font-face {
+  font-family: 'Hyperion'; /* Using fallback font 'Inter' for now */
+  /* === VERIFY THIS PATH === */
+  src: url('assets/fonts/Hyperion-Regular.woff2') format('woff2'),
+       url('assets/fonts/Hyperion-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
@@ -26,8 +37,8 @@ body.no-scroll { overflow: hidden; }
     --font-raleway: 'Raleway', sans-serif;
     --font-poppins: 'Poppins', sans-serif;
 
-    /* Active Title Font (COMMENT OUT ALL BUT ONE TO TEST) */
-    --font-title: var(--font-inter);       /* <-- Currently Active: Inter */
+    /* Active Title Font */
+    --font-title: var(--font-inter); /* Using Inter */
     /* --font-title: var(--font-nunito-sans); */
     /* --font-title: var(--font-syncopate); */
     /* --font-title: var(--font-michroma); */
@@ -36,7 +47,7 @@ body.no-scroll { overflow: hidden; }
 
     --font-body: var(--font-poppins);
 
-    /* Colors (Derived from background image) */
+    /* Colors */
     --color-red-accent: #D91F1C;
     --color-gold-accent: #C9AB7C;
     --color-tan-accent: #BB9671;
@@ -61,7 +72,7 @@ body.no-scroll { overflow: hidden; }
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0.85;
-  will-change: transform; /* Optimize for potential JS effects */
+  /* Removed will-change */
 }
 #main-background-image {
     background-attachment: fixed;
@@ -87,20 +98,22 @@ body.no-scroll { overflow: hidden; }
 #title-container { position: relative; cursor: pointer; text-align: center; }
 
 #company-name {
-    font-family: var(--font-title); /* Use the active variable */
+    font-family: var(--font-title);
     font-size: 3.8rem;
-    /* Default weight - Adjust per font below if needed */
-    font-weight: 600; /* Good start for Inter, Nunito, Outfit, Raleway */
-    /* font-weight: 700; */ /* Consider for Syncopate */
-    /* font-weight: 400; */ /* Required for Michroma */
+    font-weight: 600; /* Weight for Inter */
     color: var(--color-light-text);
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.5);
-    margin: 0; padding: 15px 30px;
+    margin: 0;
+    padding: 5px 15px; /* Adjusted padding */
     transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
     position: relative; z-index: 1;
     letter-spacing: 2px;
-    will-change: transform, color, text-shadow;
+    line-height: 1.1; /* Adjust line height for potential wrap */
+    text-align: center;
+    will-change: color, text-shadow, transform;
 }
+/* Hide the BR tag on larger screens */
+.br-desktop-hide { display: none; }
 
 #title-container::after {
     content: 'Enter'; position: absolute; bottom: -5px; left: 50%;
@@ -118,7 +131,7 @@ body.no-scroll { overflow: hidden; }
         0 0 10px rgba(217, 31, 28, 0.7),
         0 0 20px rgba(217, 31, 28, 0.5),
         1px 1px 2px rgba(0, 0, 0, 0.4);
-    transform: scale(1.02) translateY(-2px); /* Added subtle lift */
+    transform: scale(1.02) translateY(-2px);
 }
 
 #title-container:hover::after { opacity: 1; bottom: -25px; }
@@ -141,8 +154,8 @@ body.no-scroll { overflow: hidden; }
     background-color: rgba(20, 20, 20, 0.8);
     backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     z-index: 90; display: flex; align-items: center;
-    justify-content: space-between; /* Space out logo and nav */
-    padding: 0 30px; border-bottom: 1px solid var(--content-border);
+    justify-content: space-between; padding: 0 30px;
+    border-bottom: 1px solid var(--content-border);
     opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 0.4s ease, visibility 0.4s ease;
     transition-delay: 0.5s;
@@ -152,38 +165,32 @@ body.no-scroll { overflow: hidden; }
 }
 
 .header-logo {
-    font-family: var(--font-body); /* Using Poppins for header logo */
-    font-size: 1.5rem; font-weight: 600;
-    color: var(--color-gold-accent); letter-spacing: 1px;
+    font-family: var(--font-body); /* Poppins for header */
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--color-gold-accent); letter-spacing: 0.5px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: calc(100% - 150px);
 }
 
 /* Desktop Navigation */
-.desktop-nav {
-    display: none; /* Hidden by default, shown on larger screens */
-}
-.desktop-nav-links {
-    list-style: none; padding: 0; margin: 0; display: flex; gap: 30px;
-}
+.desktop-nav { display: none; }
+.desktop-nav-links { list-style: none; padding: 0; margin: 0; display: flex; gap: 30px; }
 .desktop-nav-links a {
     font-family: var(--font-body); font-size: 0.95rem; font-weight: 400;
     color: var(--color-light-text); text-decoration: none;
     padding: 5px 0; position: relative;
     transition: color 0.3s ease;
 }
-.desktop-nav-links a::after { /* Underline effect */
+.desktop-nav-links a::after {
     content: ''; position: absolute; bottom: 0; left: 0;
     width: 0; height: 2px; background-color: var(--color-red-accent);
     transition: width 0.3s ease;
 }
 .desktop-nav-links a:hover,
-.desktop-nav-links a:focus {
-    color: var(--color-red-accent);
-}
+.desktop-nav-links a:focus { color: var(--color-red-accent); }
 .desktop-nav-links a:hover::after,
-.desktop-nav-links a:focus::after {
-    width: 100%;
-}
+.desktop-nav-links a:focus::after { width: 100%; }
 
 
 .main-content-area {
@@ -226,7 +233,7 @@ body.no-scroll { overflow: hidden; }
   opacity: 0; visibility: hidden; pointer-events: none;
 }
 .nav-button i { line-height: 1; }
-.back-button { top: calc(var(--header-height) / 2 - 45px / 2); left: 30px; } /* Adjusted alignment */
+.back-button { top: calc(var(--header-height) / 2 - 45px / 2); left: 30px; }
 .mobile-menu-button { top: calc(var(--header-height) / 2 - 45px / 2); right: 30px; display: none; }
 
 #main-content.visible .back-button,
@@ -288,8 +295,8 @@ body.no-scroll { overflow: hidden; }
     .main-content-area { width: 85%; gap: 70px; padding-top: calc(var(--header-height) + 80px); }
     .content-section h2 { font-size: 1.8rem; }
     .content-section p { font-size: 1rem; }
-    .header-logo { font-size: 1.7rem; }
-    .desktop-nav { display: block; } /* Show desktop nav */
+    .header-logo { font-size: 1.3rem; }
+    .desktop-nav { display: block; }
 }
 
 @media (min-width: 1024px) {
@@ -298,24 +305,25 @@ body.no-scroll { overflow: hidden; }
 }
 
 @media (max-width: 767px) { /* Mobile and Tablet */
-    .mobile-menu-button { display: flex; } /* Show hamburger */
-    #company-name { font-size: 2.8rem; letter-spacing: 1px; line-height: 1.2; }
+    .mobile-menu-button { display: flex; }
+    #company-name { font-size: 3rem; letter-spacing: 1px; line-height: 1.15; }
     .main-content-area { width: 90%; padding-top: calc(var(--header-height) + 40px); gap: 40px; }
     .content-section { padding: 25px 20px; }
     .content-section h2 { font-size: 1.5rem; }
     .content-section p { font-size: 0.95rem; }
-    .main-header { height: 60px; padding: 0 20px; } /* Smaller header */
-    .header-logo { font-size: 1.3rem; }
+    .main-header { height: 60px; padding: 0 20px; }
+    .header-logo { font-size: 1.1rem; letter-spacing: 0px; }
     .nav-button { width: 40px; height: 40px; font-size: 0.9rem; top: 10px; }
     .back-button { left: 20px; }
     .mobile-menu-button { right: 20px; }
-    .desktop-nav { display: none; } /* Hide desktop nav */
+    .desktop-nav { display: none; }
+    .br-desktop-hide { display: inline; } /* Show the BR tag */
 }
 
-/* Specific fix for title breaking on narrow screens */
+/* Re-added specific title size adjustments for narrowest screens */
 @media (max-width: 520px) {
     #company-name {
-        font-size: 2.6rem; letter-spacing: 0.5px; line-height: 1.15; padding: 10px 5px;
+        font-size: 2.6rem; letter-spacing: 0.5px; padding: 10px 5px;
     }
     #title-container::after { font-size: 0.9rem; bottom: -18px; }
      #title-container:hover::after { bottom: -22px; }

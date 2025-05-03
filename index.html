@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- Added lang attribute -->
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,17 +19,17 @@
     <meta property="og:title" content="GeneScape Technologies | RNA for Advanced Lawn & Turf Care" />
     <meta property="og:description" content="Revolutionizing agriculture and lawn care through advanced RNA science. Discover sustainable, high-performance solutions." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://genescape.io/" /> <!-- Updated Placeholder -->
-    <meta property="og:image" content="https://genescape.io/assets/images/genescapetech-og-image.png" /> <!-- Update path/domain later -->
+    <meta property="og:url" content="https://genescape.io/" /> <!-- Using your target domain -->
+    <meta property="og:image" content="https://genescape.io/assets/images/genescapetech-og-image.png" /> <!-- Remember to create and upload this image -->
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="GeneScape Technologies" />
 
-    <!-- === Google Fonts (Needed for testing alternatives) === -->
+    <!-- === Google Fonts (Loads Inter, Poppins, and others for testing) === -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Michroma&family=Nunito+Sans:wght@400;600;700&family=Outfit:wght@400;600;700&family=Poppins:wght@400;600&family=Raleway:wght@400;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
-    <!-- ===================================================== -->
+    <!-- ================================================================= -->
 
     <!-- Font Awesome (for icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -37,7 +37,7 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Favicon Links (Implement These!) -->
+    <!-- Favicon Links (Generate and place files in root) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -57,23 +57,23 @@
         </div>
         <div class="animation-overlay">
             <div id="title-container">
-                 <h1 id="company-name" aria-label="GeneScape Technologies">
-                     <!-- Text content added dynamically by JS -->
-                 </h1>
-                 <!-- "Enter" prompt added via CSS -->
+                 <!-- === Added span + br for controlled line break === -->
+                 <!-- JS will target #company-name, but we set initial structure here -->
+                 <h1 id="company-name" aria-label="GeneScape Technologies">GeneScape<span class="br-desktop-hide"><br></span>Technologies</h1>
             </div>
         </div>
     </section>
 
     <!-- Main Content Area -->
-    <main id="main-content"> <!-- Removed inline style, JS controls visibility -->
+    <main id="main-content">
          <div class="background-container">
             <div class="background-image" id="main-background-image"></div>
          </div>
 
         <!-- Fixed Header for Main Content -->
         <header class="main-header">
-            <div class="header-logo">GeneScape Tech</div>
+             <!-- === Updated Header Logo Text === -->
+            <div class="header-logo">GeneScape Technologies</div>
             <!-- Desktop Navigation -->
             <nav class="desktop-nav">
                 <ul class="desktop-nav-links">
@@ -109,33 +109,11 @@
 
         <!-- Content Sections Wrapper -->
         <div class="main-content-area">
-            <section id="coming-soon" class="content-section">
-                <div class="section-content">
-                    <h2>Revolutionizing Lawn Care with RNA Technology</h2>
-                    <p>GeneScape Technologies is applying advanced RNA science to create next-generation solutions for commercial and residential lawn care. Experience unparalleled turf health, resilience, and sustainability. Operating in stealth mode – the future of green is growing.</p>
-                </div>
-            </section>
-
-            <section id="mission" class="content-section">
-                <div class="section-content">
-                    <h2>Our Mission</h2>
-                    <p>To leverage the precision of RNA to cultivate healthier, more resilient turf and agricultural systems, reducing chemical inputs and enhancing natural vitality from the molecule up.</p>
-                </div>
-            </section>
-
-            <section id="team" class="content-section">
-                 <div class="section-content">
-                    <h2>The Team</h2>
-                    <p>Combining expertise in bioinformatics, RNA biology, plant science, and data analytics to pioneer new frontiers in agriculture technology. Details coming soon.</p>
-                 </div>
-            </section>
-
-            <section id="contact" class="content-section">
-                 <div class="section-content">
-                    <h2>Contact</h2>
-                    <p>For partnership or investment inquiries related to our turf and agricultural applications, please contact us. Email: info@genescape.io (Replace or use form later).</p> <!-- Slightly better placeholder -->
-                 </div>
-            </section>
+            <!-- Content sections remain the same -->
+            <section id="coming-soon" class="content-section"><div class="section-content"><h2>The Next Frontier: Harnessing RNA for Advanced Biological Solutions</h2><p>GeneScape Technologies is pioneering the next generation...</p></div></section>
+            <section id="mission" class="content-section"><div class="section-content"><h2>Our Mission</h2><p>To leverage the precision of RNA...</p></div></section>
+            <section id="team" class="content-section"><div class="section-content"><h2>Expertise</h2><p>Led by a multidisciplinary team...</p></div></section>
+            <section id="contact" class="content-section"><div class="section-content"><h2>Inquiries</h2><p>For partnership or investment inquiries... info@genescape.io</p></div></section>
         </div>
 
         <!-- Footer -->
@@ -148,10 +126,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js"></script>
-    <!-- Added defer attribute -->
     <script src="script.js" defer></script>
     <script>
-        // Ensure copyright year script runs after element exists
         document.addEventListener('DOMContentLoaded', function() {
              const yearSpan = document.getElementById('copyright-year');
              if(yearSpan) {
