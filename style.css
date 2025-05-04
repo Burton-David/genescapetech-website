@@ -116,7 +116,7 @@ body.no-scroll { overflow: hidden; }
 .br-desktop-hide { display: none; }
 
 #title-container::after {
-    content: 'Enter'; position: absolute; bottom: -5px; left: 50%;
+    content: 'Find out more below'; position: absolute; bottom: -5px; left: 50%;
     transform: translateX(-50%); font-size: 1rem; font-weight: 400;
     font-family: var(--font-body);
     color: var(--color-hover-accent);
