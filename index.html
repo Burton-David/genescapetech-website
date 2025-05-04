@@ -3,41 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- SEO: Title -->
-    <title>GeneScape Technologies | Advanced RNA Tech for Lawn & Turf Care</title>
-
-    <!-- SEO: Meta Description -->
+    <title>GeneScape Technologies | Vision</title>
     <meta name="description" content="GeneScape Technologies leverages cutting-edge RNA science to revolutionize lawn care and agriculture. Discover sustainable, high-performance solutions for healthier turf and crops." />
-
-    <!-- SEO: Keywords -->
     <meta name="keywords" content="RNA technology, lawn care, turf management, agriculture technology, sustainable agriculture, crop science, GeneScape Technologies, RNA editing, bioinformatics" />
-
-    <!-- Theme Color -->
     <meta name="theme-color" content="#1D1D1D" />
-
-    <!-- SEO / Social Sharing: Open Graph -->
     <meta property="og:title" content="GeneScape Technologies | RNA for Advanced Lawn & Turf Care" />
     <meta property="og:description" content="Revolutionizing agriculture and lawn care through advanced RNA science. Discover sustainable, high-performance solutions." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://genescape.io/" /> <!-- Using your target domain -->
-    <meta property="og:image" content="https://genescape.io/assets/images/genescapetech-og-image.png" /> <!-- Remember to create and upload this image -->
+    <meta property="og:url" content="https://genescape.io/" />
+    <meta property="og:image" content="https://genescape.io/assets/images/genescapetech-og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="GeneScape Technologies" />
-
-    <!-- === Google Fonts (Loads Inter, Poppins, and others for testing) === -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Michroma&family=Nunito+Sans:wght@400;600;700&family=Outfit:wght@400;600;700&family=Poppins:wght@400;600&family=Raleway:wght@400;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
-    <!-- ================================================================= -->
-
-    <!-- Font Awesome (for icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css" />
-
-    <!-- Favicon Links (Generate and place files in root) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -45,20 +24,19 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#c9ab7c" />
     <meta name="msapplication-TileColor" content="#1d1d1d" />
     <meta name="theme-color" content="#ffffff" />
-    <!-- ========================================== -->
-
+    <!-- Google Fonts Link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Michroma&family=Nunito+Sans:wght@400;600;700&family=Outfit:wght@400;600;700&family=Poppins:wght@400;600&family=Raleway:wght@400;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
 </head>
-<body class="no-scroll"> <!-- Start with scrolling disabled -->
+<body class="no-scroll">
 
-    <!-- Entrance Screen -->
     <section id="entrance-screen">
         <div class="background-container">
             <div class="background-image" id="entrance-background-image"></div>
         </div>
         <div class="animation-overlay">
             <div id="title-container">
-                 <!-- === Added span + br for controlled line break === -->
-                 <!-- JS will target #company-name, but we set initial structure here -->
                  <h1 id="company-name" aria-label="GeneScape Technologies">GeneScape<span class="br-desktop-hide"><br></span>Technologies</h1>
             </div>
         </div>
@@ -66,15 +44,25 @@
 
     <!-- Main Content Area -->
     <main id="main-content">
+         <!-- 1. Static Fixed Background (Lowest Layer) -->
          <div class="background-container">
-            <div class="background-image" id="main-background-image"></div>
+            <div class="background-image" id="main-background-image"></div> <!-- Uses BioWebsiteBackground.png -->
          </div>
 
-        <!-- Fixed Header for Main Content -->
+         <!-- 2. NEW: Video Background for Initial Viewport -->
+         <div class="main-video-container">
+             <video id="mainVideo" class="background-video" autoplay loop muted playsinline>
+                 <source src="assets/videos/Tunnel with dna.mp4" type="video/mp4"> <!-- Verify Path -->
+                 Your browser does not support the video tag.
+                 <!-- Optional Poster Image -->
+                 <!-- <img src="assets/images/image2.png" alt="Fallback background"> -->
+             </video>
+         </div>
+         <!-- ======================================== -->
+
+         <!-- 3. Fixed Header (Above Video & Static BG) -->
         <header class="main-header">
-             <!-- === Updated Header Logo Text === -->
             <div class="header-logo">GeneScape Technologies</div>
-            <!-- Desktop Navigation -->
             <nav class="desktop-nav">
                 <ul class="desktop-nav-links">
                     <li><a href="#coming-soon">Home</a></li>
@@ -85,17 +73,11 @@
             </nav>
         </header>
 
-        <!-- Back Button -->
-        <button id="back-button" class="nav-button back-button" aria-label="Go back to entrance">
-            <i class="fas fa-arrow-left"></i>
-        </button>
+        <!-- 4. Navigation Buttons (Above Everything) -->
+        <button id="back-button" class="nav-button back-button" aria-label="Go back to entrance"><i class="fas fa-arrow-left"></i></button>
+        <button id="mobile-menu-button" class="nav-button mobile-menu-button" aria-label="Toggle mobile menu"><i class="fas fa-bars"></i></button>
 
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-button" class="nav-button mobile-menu-button" aria-label="Toggle mobile menu">
-            <i class="fas fa-bars"></i> <!-- Initial icon -->
-        </button>
-
-        <!-- Mobile Menu Panel -->
+        <!-- 5. Mobile Menu Panel (Above Everything) -->
         <nav class="mobile-menu">
             <button class="close-menu-button" aria-label="Close menu">×</button>
             <ul class="mobile-nav-links">
@@ -107,16 +89,19 @@
         </nav>
         <div class="mobile-menu-overlay"></div>
 
-        <!-- Content Sections Wrapper -->
+        <!-- 6. Content Sections Wrapper (Above Video & Static BG) -->
         <div class="main-content-area">
-            <!-- Content sections remain the same -->
-            <section id="coming-soon" class="content-section"><div class="section-content"><h2>The Next Frontier: Harnessing RNA for Advanced Biological Solutions</h2><p>GeneScape Technologies is pioneering the next generation...</p></div></section>
-            <section id="mission" class="content-section"><div class="section-content"><h2>Our Mission</h2><p>To leverage the precision of RNA...</p></div></section>
-            <section id="team" class="content-section"><div class="section-content"><h2>Expertise</h2><p>Led by a multidisciplinary team...</p></div></section>
-            <section id="contact" class="content-section"><div class="section-content"><h2>Inquiries</h2><p>For partnership or investment inquiries... info@genescape.io</p></div></section>
+            <section id="coming-soon" class="content-section">
+                <div class="section-content"><h2>The Next Frontier: Harnessing RNA for Advanced Biological Solutions</h2><p>GeneScape Technologies is pioneering...</p></div></section>
+            <section id="mission" class="content-section">
+                <div class="section-content"><h2>Our Mission</h2><p>To leverage the precision of RNA...</p></div></section>
+            <section id="team" class="content-section">
+                 <div class="section-content"><h2>Expertise</h2><p>Led by a multidisciplinary team...</p></div></section>
+            <section id="contact" class="content-section">
+                 <div class="section-content"><h2>Inquiries</h2><p>For partnership or investment inquiries... info@genescape.io</p></div></section>
         </div>
 
-        <!-- Footer -->
+        <!-- 7. Footer (Above Static BG) -->
         <footer class="main-footer">
             <p>© <span id="copyright-year"></span> GeneScape Technologies. All rights reserved.</p>
         </footer>
@@ -130,9 +115,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
              const yearSpan = document.getElementById('copyright-year');
-             if(yearSpan) {
-                 yearSpan.textContent = new Date().getFullYear();
-             }
+             if(yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
         });
     </script>
 
